@@ -1,5 +1,4 @@
 # Peony
-#
 A multi-purposes certificate contract platform on ethereum 
 
 - Platform will be called as Peony
