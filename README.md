@@ -1,4 +1,4 @@
-# Peony
+# CS359B Project Peony Blockchain Certificate
 A multi-purposes certificate contract platform on ethereum 
 
 - Platform will be called as Peony
