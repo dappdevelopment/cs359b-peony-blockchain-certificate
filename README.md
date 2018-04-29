@@ -12,4 +12,3 @@ Make sure you're MetaMask is running on same port number (Ganache: 7454)
 - To deploy
     -http://truffleframework.com/tutorials/deploying-to-the-live-network
 
-- White Paper:
