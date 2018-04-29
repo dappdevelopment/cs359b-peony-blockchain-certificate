@@ -7,9 +7,10 @@ A multi-purposes certificate contract platform on ethereum
 
 ## Technologies used
 
-(Add only the specific technologies you need to use until Midterm)
-
-* (e.g. solidity, react, node, mysql)
+* Solidity
+* truffle
+* ERC 721
+* drizzle
 
 ## Istallation intructions
 
