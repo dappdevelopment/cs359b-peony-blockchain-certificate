@@ -15,9 +15,9 @@
     "css-loader": "0.26.0",
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
-    "drizzle": "^1.0.1",
-    "drizzle-react": "^1.0.1",
-    "drizzle-react-components": "^1.0.1",
+    "drizzle": "^1.1.0",
+    "drizzle-react": "^1.1.0",
+    "drizzle-react-components": "^1.1.0",
     "eslint": "3.8.1",
     "eslint-config-react-app": "^0.5.0",
     "eslint-loader": "1.6.0",
@@ -49,7 +49,9 @@
     "webpack-dev-server": "1.16.2",
     "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "1.0.0",
-    "zeppelin-solidity": "^1.6.0"
+    "zeppelin-solidity": "^1.9.0",
+    "eth-block-tracker-es5": "^2.3.2",
+    "web3": "1.0.0-beta.34"
   },
   "dependencies": {
     "react": "^15.4.2",
