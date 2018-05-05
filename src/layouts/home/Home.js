@@ -51,6 +51,22 @@ class Home extends Component {
 
             <br/><br/>
           </div>
+
+
+          <div className="pure-u-1-1">
+            <h2>My Peony</h2>
+            <p>My Peony Cert I have..</p>
+            <p><strong>List</strong>: <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /></p>
+            <br/><br/>
+          </div>
+
+          <div className="pure-u-1-1">
+            <h2>Issue My Peony</h2>
+            <p>Create new cert!</p>
+            <p><strong>List</strong>: <ContractForm contract="PeonyCertificate" method="IssueCertificate"  labels={['To Address', 'Customer Text']} /></p>
+            <br/><br/>
+          </div>
+
         </div>
       </main>
     )
