@@ -8,9 +8,9 @@ A multi-purposes certificate contract platform on ethereum
 ## Technologies used
 
 * Solidity
-* truffle
+* Rruffle
 * ERC 721
-* drizzle
+* Drizzle
 
 ## Istallation intructions
 
