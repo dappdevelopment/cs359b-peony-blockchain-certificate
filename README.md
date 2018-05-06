@@ -22,5 +22,7 @@ A multi-purposes certificate contract platform on ethereum
 
 	more to add ..
 
+- npm install antd --save
+
 
 

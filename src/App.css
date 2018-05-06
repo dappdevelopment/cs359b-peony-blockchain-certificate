@@ -1,5 +1,25 @@
 /* PAGE */
 
+.logo {
+  color: white;
+  float: left;
+  font-size: 20px;
+  line-height: 63px;
+  margin-right: 10px;
+}
+
+.ant-card {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+
 body,
 .pure-g [class*=pure-u] {
   font-family: 'Open Sans', sans-serif;
@@ -19,13 +39,13 @@ code {
   background: #eee;
 }
 
-.container {
+/* .container {
   box-sizing: border-box;
   width: calc(100% - 60px);
   max-width: 600px;
   padding: 45px 20px;
   margin: 0 auto;
-}
+} */
 
 .pure-button-primary {
   background-color: #0c1a2b;
