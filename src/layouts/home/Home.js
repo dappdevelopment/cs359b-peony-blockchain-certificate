@@ -125,8 +125,11 @@ class Home extends Component {
           <div className="pure-u-1-1 header">
             <img src={logo} alt="drizzle-logo" width="200px"/>
             <h1>Peony</h1>
-
+            <div>
+              <p>Total Active Certificate Powered By Peony:<ContractData contract="PeonyCertificate" method="totalSupply"/></p>
+            </div>
             <br/><br/>
+
           </div>
         
           <div className="pure-u-1-1" hidden>
