@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
 import logo from '../../peonyLogo.png'
 
-
-//import PayrollContract from '../build/contracts/Payroll.json'
 import getWeb3 from '../../util/web3/getWeb3'
 
 import { Layout, Menu, Spin, Alert } from 'antd';
@@ -49,13 +47,6 @@ class Home extends Component {
     })
   }
 
-  // instantiateContract() {
-  //   /*
-  //    * SMART CONTRACT EXAMPLE
-  //    *
-  //    * Normally these functions would be called in the context of a
-  //    * state management library, but for convenience I've placed them here.
-  //    */
 
   //   const contract = require('truffle-contract')
   //   const Payroll = contract(PayrollContract)
@@ -78,20 +69,21 @@ class Home extends Component {
   //   })
   // }
 
+  // instantiateContract() {
+  //   /*
+  //    * SMART CONTRACT EXAMPLE
+  //    *
+  //    * Normally these functions would be called in the context of a
+  //    * state management library, but for convenience I've placed them here.
+  //    */
+
+
+  
+
   onSelectTab = ({key}) => {
     this.setState({
       mode: key
     });
-  }
-
-  GetAllCertificate = () => {
-    //var drizzle = new Drizzle(drizzleOptions, store);
-    var length = <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]}/>;
-    console.log(length)
-    // var lenth = self.props.contract.totalSupply;
-    //var length = this.props.drizzleStatus.initialized ? 'come on': 'oops';
-    // console.log(length);
-    return length;
   }
 
 
@@ -207,7 +199,6 @@ class Home extends Component {
               <Layout style={{ padding: '24px 0', background: '#fff', minHeight: '600px' }}>
                 {this.renderContent()}
                 {/* {console.log(this)} */}
-                {/* {this.GetAllCertificate()} */}
               </Layout>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
