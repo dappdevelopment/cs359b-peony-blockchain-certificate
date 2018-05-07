@@ -15,9 +15,6 @@ import '../../App.css';
 
 const { Header, Content, Footer } = Layout;
 
-
-
-
 class Home extends Component {
   constructor(props) {
     super(props)
@@ -47,7 +44,13 @@ class Home extends Component {
     })
   }
 
-
+  // instantiateContract() {
+  //   /*
+  //    * SMART CONTRACT EXAMPLE
+  //    *
+  //    * Normally these functions would be called in the context of a
+  //    * state management library, but for convenience I've placed them here.
+  //    */
   //   const contract = require('truffle-contract')
   //   const Payroll = contract(PayrollContract)
   //   Payroll.setProvider(this.state.web3.currentProvider)
@@ -69,23 +72,11 @@ class Home extends Component {
   //   })
   // }
 
-  // instantiateContract() {
-  //   /*
-  //    * SMART CONTRACT EXAMPLE
-  //    *
-  //    * Normally these functions would be called in the context of a
-  //    * state management library, but for convenience I've placed them here.
-  //    */
-
-
-  
-
   onSelectTab = ({key}) => {
     this.setState({
       mode: key
     });
   }
-
 
   renderContent = () => {
     const { account, payroll, web3, mode } = this.state;
@@ -93,9 +84,6 @@ class Home extends Component {
     // if (!payroll) {
     //   return <Spin tip="Loading..." />;
     // }
-    
-    
-    
 
     switch(mode) {
       case 'employer':
@@ -105,7 +93,7 @@ class Home extends Component {
       case 'lookup':
         return <Lookup account={account} payroll={payroll} web3={web3} />
       default:
-        return <Alert message="请选一个模式" type="info" showIcon />
+        return <Alert message="choose mode" type="info" showIcon />
     }
   }
 
