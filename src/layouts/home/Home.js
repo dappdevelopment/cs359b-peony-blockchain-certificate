@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
 import logo from '../../peonyLogo.png'
+import PropTypes from 'prop-types'
+
 
 import getWeb3 from '../../util/web3/getWeb3'
 
 import { Layout, Menu, Spin, Alert } from 'antd';
 
-import Employer from '../../components/Employer';
-import Employee from '../../components/Employee';
-import Lookup from '../../components/Lookup';
+import IssueCertificate from '../issuecertificate/IssueCertificate';
+import MyCertificate from '../mycertificate/MyCertificate';
+import Lookup from '../lookup/Lookup';
+
+import IssueCertificateContainer from '../issuecertificate/IssueCertificateContainer';
+import MyCertificateContainer from '../mycertificate/MyCertificateContainer';
+import LookupContainer from '../lookup/LookupContainer';
 
 import 'antd/dist/antd.css';
 import '../../App.css';
@@ -16,61 +22,13 @@ import '../../App.css';
 const { Header, Content, Footer } = Layout;
 
 class Home extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props)
-
+    this.contracts = context.drizzle.contracts;
     this.state = {
-      storageValue: 0,
-      web3: null,
-      mode: 'employer'
-    }
+      mode: 'Lookup'
+    } 
   }
-
-  componentWillMount() {
-    // Get network provider and web3 instance.
-    // See utils/getWeb3 for more info.
-
-    getWeb3
-    .then(results => {
-      this.setState({
-        web3: results.web3
-      })
-
-      // Instantiate contract once web3 provided.
-      //this.instantiateContract()
-    })
-    .catch(() => {
-      console.log('Error finding web3.')
-    })
-  }
-
-  // instantiateContract() {
-  //   /*
-  //    * SMART CONTRACT EXAMPLE
-  //    *
-  //    * Normally these functions would be called in the context of a
-  //    * state management library, but for convenience I've placed them here.
-  //    */
-  //   const contract = require('truffle-contract')
-  //   const Payroll = contract(PayrollContract)
-  //   Payroll.setProvider(this.state.web3.currentProvider)
-
-  //   // Declaring this for later so we can chain functions on Payroll.
-  //   var PayrollInstance
-
-  //   // Get accounts.
-  //   this.state.web3.eth.getAccounts((error, accounts) => {
-  //     this.setState({
-  //       account: accounts[0],
-  //     });
-  //     Payroll.deployed().then((instance) => {
-  //       PayrollInstance = instance
-  //       this.setState({
-  //         payroll: instance
-  //       });
-  //     })
-  //   })
-  // }
 
   onSelectTab = ({key}) => {
     this.setState({
@@ -79,21 +37,18 @@ class Home extends Component {
   }
 
   renderContent = () => {
-    const { account, payroll, web3, mode } = this.state;
 
-    // if (!payroll) {
-    //   return <Spin tip="Loading..." />;
-    // }
+    const { mode } = this.state;
 
     switch(mode) {
-      case 'employer':
-        return <Employer account={account} payroll={payroll} web3={web3} />
-      case 'employee':
-        return <Employee account={account} payroll={payroll} web3={web3} first_acc={[this.props.accounts[0]]}/>
-      case 'lookup':
-        return <Lookup account={account} payroll={payroll} web3={web3} />
+      case 'IssueCertificate':
+        return <IssueCertificateContainer />
+      case 'MyCertificate':
+        return <MyCertificateContainer />
+      case 'Lookup':
+        return <LookupContainer />
       default:
-        return <Alert message="choose mode" type="info" showIcon />
+        return <LookupContainer />
     }
   }
 
@@ -174,13 +129,13 @@ class Home extends Component {
               <Menu
                 theme="dark"
                 mode="horizontal"
-                defaultSelectedKeys={['employer']}
+                defaultSelectedKeys={['Lookup']}
                 style={{ lineHeight: '64px' }}
                 onSelect={this.onSelectTab}
               >
-                <Menu.Item key="employer">Issuer</Menu.Item>
-                <Menu.Item key="employee">Receiver</Menu.Item>
-                <Menu.Item key="lookup">Look up</Menu.Item>
+                <Menu.Item key="Lookup">Look up</Menu.Item>
+                <Menu.Item key="IssueCertificate">Issuer</Menu.Item>
+                <Menu.Item key="MyCertificate">Receiver</Menu.Item>
               </Menu>
             </Header>
             <Content style={{ padding: '0 50px' }}>
@@ -197,6 +152,10 @@ class Home extends Component {
       </main>
     )
   }
+}
+
+Home.contextTypes = {
+  drizzle: PropTypes.object
 }
 
 export default Home

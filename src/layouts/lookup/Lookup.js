@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Card, Col, Row, Layout, Alert, message, Button } from 'antd';
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
-import Common from './Common';
+import { Card, Col, Row, Layout, Alert, message, Button } from 'antd';
+import PropTypes from 'prop-types'
+
 
 class Lookup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  constructor(props, context) {
+    super(props)
+    this.contracts = context.drizzle.contracts;
   }
 
   componentDidMount() {
@@ -20,29 +21,8 @@ class Lookup extends Component {
   }
 
   renderContent() {
-    const { salary, lastPaidDate, balance } = this.state;
-
     return (
       <div>
-        {/* <Row gutter={16}>
-          <Col span={8}>
-            <Card title="薪水">{salary} Ether</Card>
-          </Col>
-          <Col span={8}>
-            <Card title="上次支付">{lastPaidDate}</Card>
-          </Col>
-          <Col span={8}>
-            <Card title="帐号金额">{balance} Ether</Card>
-          </Col>
-        </Row>
-
-        <Button
-          type="primary"
-          icon="bank"
-          onClick={this.getPaid}
-        >
-          获得酬劳
-        </Button> */}
         <h2>To do!!!!!</h2>
       </div>
     );
@@ -62,6 +42,11 @@ class Lookup extends Component {
       </Layout >
     );
   }
+}
+
+
+Lookup.contextTypes = {
+  drizzle: PropTypes.object
 }
 
 export default Lookup
