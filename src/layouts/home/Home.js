@@ -134,8 +134,8 @@ class Home extends Component {
                 onSelect={this.onSelectTab}
               >
                 <Menu.Item key="Lookup">Look up</Menu.Item>
-                <Menu.Item key="IssueCertificate">Issuer</Menu.Item>
-                <Menu.Item key="MyCertificate">Receiver</Menu.Item>
+                <Menu.Item key="IssueCertificate">Create New Certificate</Menu.Item>
+                <Menu.Item key="MyCertificate">View My Certificate</Menu.Item>
               </Menu>
             </Header>
             <Content style={{ padding: '0 50px' }}>
