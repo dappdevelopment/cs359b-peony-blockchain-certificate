@@ -24,5 +24,18 @@ A multi-purposes certificate contract platform on ethereum
 
 - npm install antd --save
 
+## More Features
+    
+    
+- Add the feature to approve / deny the token teansfer.
+  Ex: deny degree transfer, approve membership transfer
+
+- Expiration 
+  can be implement in front end to avoid overhead.
+
+  more to add ..
+ 
+
+
 
 

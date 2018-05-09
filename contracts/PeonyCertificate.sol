@@ -3,6 +3,7 @@ import "zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 // References: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.8.0/contracts/token/ERC721/ERC721Token.sol
 
 contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
+    // These two are included in the open lib
     string internal name_ = "Peony";
     string internal symbol_ = "PNY";
     uint256 tokenId = 1; // default tokenId for helping people to create unique id
@@ -16,7 +17,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // Mapping from token ID to issuer
     mapping (uint256 => address) internal tokenIssuer;
-
+    
+    // constructor
     function PeonyCertificate() public { 
 
     }
