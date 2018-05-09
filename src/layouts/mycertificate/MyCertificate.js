@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
-import { Card, Col, Row, Layout, Alert, message, Button } from 'antd';
+import { Card, Col, Row, Layout, Alert, message, Button, Menu } from 'antd';
+const { Content, Sider, Header } = Layout;
 import PropTypes from 'prop-types'
 
 class MyCertificate extends Component {
@@ -8,7 +9,35 @@ class MyCertificate extends Component {
     super(props)
     this.contracts = context.drizzle.contracts;
     this.state = {
+      mode: 'default'
     }
+  }
+
+  onSelectTab = ({key}) => {
+    this.setState({
+      mode: key
+    });
+  }
+
+
+  renderContent = () => {
+    const { mode, tokenURIs } = this.state;
+    if (mode != 'default') {
+      var sp = tokenURIs.split(", ");
+      return <div>{sp[mode]}</div>
+    } else {
+      return <div>you have no certificate!!!!!!</div>
+    }
+    // switch(mode) {
+    //   case '1':
+    //     // return <Fund account={account} payroll={payroll} web3={web3} />
+       
+    //   case '2':
+    //     // return <EmployeeList account={account} payroll={payroll} web3={web3} />
+    //     return <div>{this.state.tokenURIs[1]}</div>
+    //   case 'default':
+    //     return <div>you have no certificate!!!!!!</div>
+    // }
   }
 
   render() {
@@ -26,6 +55,7 @@ class MyCertificate extends Component {
     var self = this;
     var tokenIds = [];
     var tokenURIs = [];
+    var menuItems = [];
     this.contracts.PeonyCertificate.methods.balanceOf(self.props.accounts[0]).call().then(function(balance){
         var promises = [];
         for(var i = 0 ; i < balance ; i++){
@@ -44,28 +74,62 @@ class MyCertificate extends Component {
             //console.log(uris);
               self.state.tokenIds = values.join(', ');
               self.state.tokenURIs = uris.join(', ');
+
+              //generate data for menu
+              for (var i = 0; i < balance; i++) {
+                menuItems.push(<Menu.Item key={i}>{values[i]}</Menu.Item>);
+              }
+              self.state.menuItems = menuItems;
            });
         });
     }); 
+  
+    
+    
+
+    
     return (
       <Layout style={{ padding: '24px 24px', background: '#fff' }}>
-        {/* <Common account={account} payroll={payroll} web3={web3} />
-        <h2>个人信息</h2> */}
-        <div className="pure-u-1-1">
+       
+          
+        <Content style={{ padding: '0 50px', minHeight: 280 }}>
+          <div className="pure-u-1-1">
+            <h2>My Peony</h2>
+            <p>You have 
+            <strong></strong> <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate.</p>
+          </div>
+          {<Sider width={200} style={{ background: '#fff' }}>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['fund']}
+              style={{ height: '100%' }}
+              onSelect={this.onSelectTab}
+            >
+              {self.state.menuItems}
+              {/* <Menu.Item key="fund">Contract 1</Menu.Item>
+              <Menu.Item key="employees">Contract 2</Menu.Item> */}
+            </Menu>
+          </Sider>}
+          
+        </Content>
+        
+        
+        <Content style={{ padding: '50px 24px', minHeight: 280 }}>
+            {this.renderContent()}
+        </Content>
+        {/* {<div className="pure-u-1-1">
           <h2>My Peony</h2>
           <p>You have 
-          {/* <p><strong>List</strong>: <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={this.props.first_acc} /></p> */}
           <strong></strong> <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate.</p>
           <br/><br/>
           <p>
           <strong>Details</strong>
           <br/><br/>
           {this.state.tokenIds}
-          <br/><br/>
           {this.state.tokenURIs}
           </p>
           <br/><br/>
-        </div>
+        </div> } */}
       </Layout >
     );
   }

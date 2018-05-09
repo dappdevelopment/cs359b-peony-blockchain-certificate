@@ -56,7 +56,7 @@ class Home extends Component {
   render() {
     return (
       <main className="container">
-        <div className="pure-g">
+        <div className="pure-g" hidden>
           <div className="pure-u-1-1 header">
             <img src={logo} alt="drizzle-logo" width="200px"/>
             <h1>Peony</h1>
