@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Icon } from 'antd';
+import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
+import _ from 'underscore'
 
 class EditableCell extends React.Component {
   state = {
@@ -45,6 +47,12 @@ class EditableCell extends React.Component {
                 className="editable-cell-icon"
                 onClick={this.edit}
               />
+            {
+              !_.isEmpty(value) ?
+                <ContractData contract="PeonyCertificate" method="tokenURI" methodArgs={[value]}/>
+              :
+                <div/>
+            }
             </div>
         }
       </div>

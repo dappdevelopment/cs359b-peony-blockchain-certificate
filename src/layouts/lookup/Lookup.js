@@ -3,7 +3,7 @@ import { AccountData, ContractData, ContractForm } from 'drizzle-react-component
 import { Card, Col, Row, Layout, Alert, message, Button } from 'antd';
 import PropTypes from 'prop-types'
 import logo from '../../peonyLogo.png'
-
+import EditableCell from '../../components/EditableCell'
 
 class Lookup extends Component {
   constructor(props, context) {
@@ -30,8 +30,6 @@ class Lookup extends Component {
   }
 
   render() {
-    const { account, payroll, web3 } = this.props;
-
     return (
       // <Layout style={{ padding: '24px 24px', background: '#fff' }}>
       //   {<Common account={account} payroll={payroll} web3={web3} />
@@ -48,7 +46,7 @@ class Lookup extends Component {
               <p>Total Active Certificate Powered By Peony:<ContractData contract="PeonyCertificate" method="totalSupply"/></p>
             </div>
             <br/><br/>
-
+            <EditableCell />
         </div>
     );
   }
