@@ -59,3 +59,5 @@ typings/
 
 # contract build files
 build/
+# npm build folders
+build_webpack/
