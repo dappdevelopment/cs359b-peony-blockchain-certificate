@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
-import logo from '../../peonyLogo.png'
+// import logo from '../../peonyLogo.png'
+// if we ever change to a non-white background
+import logo from '../../peony_logo_white_background.png'
+
 import PropTypes from 'prop-types'
 
 
