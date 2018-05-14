@@ -26,7 +26,7 @@ class MyCertificate extends Component {
       var sp = tokenURIs.split(", ");
       return <div>{sp[mode]}</div>
     } else {
-      return <div>you have no certificate!!!!!!</div>
+      return <div>Click contarct id to view name here...</div>
     }
     // switch(mode) {
     //   case '1':
@@ -83,20 +83,15 @@ class MyCertificate extends Component {
            });
         });
     }); 
-  
-    
-    
-
     
     return (
       <Layout style={{ padding: '24px 24px', background: '#fff' }}>
-       
-          
+                 
         <Content style={{ padding: '0 50px', minHeight: 280 }}>
           <div className="pure-u-1-1">
             <h2>My Peony</h2>
             <p>You have 
-            <strong></strong> <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate.</p>
+            <strong></strong> <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate. (for now showing contract id)</p>
           </div>
           {<Sider width={200} style={{ background: '#fff' }}>
             <Menu
