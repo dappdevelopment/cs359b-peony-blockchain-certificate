@@ -61,3 +61,5 @@ typings/
 # build/ 
 # npm build folders
 build_webpack/
+
+.DS_Store
