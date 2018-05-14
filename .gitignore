@@ -57,7 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
-# contract build files
-build/
+# contract build files (no longer ignored because we want others has the same info of the contracts addresses)
+# build/ 
 # npm build folders
 build_webpack/
