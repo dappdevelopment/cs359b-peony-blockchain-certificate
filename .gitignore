@@ -62,4 +62,6 @@ typings/
 # npm build folders
 build_webpack/
 
+# OS generated files
 .DS_Store
+.DS_Store?
