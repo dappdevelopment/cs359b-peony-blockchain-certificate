@@ -63,5 +63,5 @@ typings/
 build_webpack/
 
 # OS generated files
-.DS_Store
-.DS_Store?
+*/.DS_Store
+*/*/.DS_Store
