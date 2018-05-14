@@ -34,7 +34,7 @@ class IssueCertificate extends Component {
       <Layout style={{ padding: '24px 24px', background: '#fff'}}>
         <div className="pure-u-1-1">
           <h2>Issue My Peony</h2>
-          <p>Create new cert!</p>
+          <p>Create and issue new certificate!</p>
           {/* <p><strong>List</strong>: <ContractForm contract="PeonyCertificate" method="IssueCertificate"  labels={['To Address', 'Customer Text']} /></p> */}
           <p><strong></strong><ContractForm contract="PeonyCertificate" method="IssueCertificate"  labels={['To Address', 'Customer Text']} /></p>
           <br/><br/>
@@ -42,9 +42,7 @@ class IssueCertificate extends Component {
         {/* <Content style={{ padding: '0 24px', minHeight: 280 }}>
           {this.renderContent()}
         </Content> */}
-      </Layout>
-      
-      
+      </Layout>            
     );
   }
 }
