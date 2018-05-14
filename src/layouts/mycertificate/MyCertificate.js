@@ -56,7 +56,16 @@ class MyCertificate extends Component {
     var tokenIds = [];
     var tokenURIs = [];
     var menuItems = [];
+    console.log("!");
+    var temp;
+    
+    temp = this.contracts.PeonyCertificate.methods.debug().call().then(function(err, accs) {
+      temp = accs;
+    });
+    console.log(temp);
+    console.log("@");
     this.contracts.PeonyCertificate.methods.balanceOf(self.props.accounts[0]).call().then(function(balance){
+        
         var promises = [];
         for(var i = 0 ; i < balance ; i++){
            promises.push( self.contracts.PeonyCertificate.methods.tokenOfOwnerByIndex(self.props.accounts[0], i).call());

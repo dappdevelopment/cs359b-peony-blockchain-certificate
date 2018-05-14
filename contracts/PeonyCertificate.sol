@@ -22,7 +22,10 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function PeonyCertificate() public { 
 
     }
-
+    function debug() public view returns(uint){
+        return tokenId;
+    }
+    
     // Function to issue certificate to a receiver
     // _uri  : The JSON string data that we will put in certificate
     function IssueCertificate(address _to, string _uri) public {
