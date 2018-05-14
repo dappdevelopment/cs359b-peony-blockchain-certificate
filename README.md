@@ -51,8 +51,7 @@ A multi-purposes certificate contract platform on ethereum
  1. Go to root directory of the project
  2. Run ```npm run build```
  3. Once build file is generated in ```build_webpack/``` foler
- 4. Copy the the whole folder to the server (root directory or the sepcified directory)  ```scp -r ./build_webpack/ peony@dapps.nofaults.org:~/cs359b-peony-blockchain-certificate```
- 4. (For our class: ```/home/peony/cs359b-peony-blockchain-certificate```)
+ 4. Copy the the whole folder to the server (root directory or the sepcified directory)  ```scp -r ./build_webpack/ peony@dapps.nofaults.org:~/cs359b-peony-blockchain-certificate``` (For our class: ```/home/peony/cs359b-peony-blockchain-certificate```)
  5. Done
 
  ### Connecting the server
