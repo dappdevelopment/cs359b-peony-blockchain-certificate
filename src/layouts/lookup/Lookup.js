@@ -42,7 +42,7 @@ class Lookup extends Component {
         
       // </Layout >
       <div className="pure-u-1-1 header">
-            <img src={logo} alt="drizzle-logo" width="200px"/>
+            <img src={logo} alt="peony-logo" width="200px"/>
             <h1>Peony</h1>
             <div>
               <p>Total Active Certificate Powered By Peony: <ContractData contract="PeonyCertificate" method="totalSupply"/></p>
@@ -53,7 +53,6 @@ class Lookup extends Component {
     );
   }
 }
-
 
 Lookup.contextTypes = {
   drizzle: PropTypes.object

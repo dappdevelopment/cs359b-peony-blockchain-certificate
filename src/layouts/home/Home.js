@@ -61,7 +61,7 @@ class Home extends Component {
       <main className="container">
         <div className="pure-g" hidden>
           <div className="pure-u-1-1 header">
-            <img src={logo} alt="drizzle-logo" width="200px"/>
+            <img src={logo} alt="peony-logo" width="200px"/>
             <h1>Peony</h1>
             <div>
               <p>Total Active Certificate Powered By Peony: <ContractData contract="PeonyCertificate" method="totalSupply"/></p>
