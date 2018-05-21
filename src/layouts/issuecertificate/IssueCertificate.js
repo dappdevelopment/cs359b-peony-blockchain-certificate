@@ -12,16 +12,18 @@ class IssueCertificate extends Component {
     this.contracts = context.drizzle.contracts;
   }
 
-  // componentDidMount() {
-  //   const { account, payroll } = this.props;
-  //   payroll.owner.call({
-  //     from: account
-  //   }).then((result) => {
-  //     this.setState({
-  //       owner: result
-  //     });
-  //   })
-  // }
+/*  
+  componentDidMount() {
+    const { account, payroll } = this.props;
+    payroll.owner.call({
+      from: account
+    }).then((result) => {
+      this.setState({
+      owner: result
+      });
+    })
+  }
+*/  
 
   onSelectTab = ({key}) => {
     this.setState({

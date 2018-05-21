@@ -17,6 +17,9 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // Mapping from token ID to issuer
     mapping (uint256 => address) internal tokenIssuer;
+
+    // Mapping from token ID to Expiration time
+    mapping (uint256 => uint256) internal certificateExpirationTime;
     
     // constructor
     function PeonyCertificate() public { 
