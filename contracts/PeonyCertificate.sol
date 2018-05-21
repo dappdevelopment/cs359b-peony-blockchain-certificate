@@ -28,15 +28,34 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // Function to issue certificate to a receiver
     // _uri  : The JSON string data that we will put in certificate
+    function IssueCertificate(address _to, string _uri) public {
+        this.IssueCertificate(_to, _uri, 0);
+    }
+
+    // OverLoaded function for regression
     function IssueCertificate(address _to, string _uri, uint256 expirationTime) public {
         uint256 newTokenId = tokenId++;
-        // super._mint(_to, newTokenId);
-        super._mint(_to, newTokenId, expirationTime); // not tested.. if set it here, need change mint
+        super._mint(_to, newTokenId);
+        //super._mint(_to, newTokenId, expirationTime); // not tested.. if set it here, need change mint
         super._setTokenURI(newTokenId, _uri);
-        // Update issuer data
+        // Update issuer data and Addition Peony Features
         uint256 issuerLength = issuedTokens[msg.sender].length;
         issuedTokens[msg.sender].push(newTokenId);
         issuedTokensIndex[newTokenId] = issuerLength;
         tokenIssuer[newTokenId] = msg.sender;
+        // Add expireationTime stamp
+        certificateExpirationTime[newTokenId] = expirationTime;
+    }
+
+    // Get Issuer address from provided tokentId
+    // 0: meaning the tokenId doesn't have mapped Issuer Address (more likely there is no such token)
+    function GetIssuerAddressByTokenId(uint256 tokenId) public view returns(address Issuer){
+        return tokenIssuer[tokenId];
+    }
+
+        // Get Issuer address from provided tokentId
+    // 0: meaning the tokenId doesn't have mapped Issuer Address (more likely there is no such token)
+    function GetExpirationTimeByTokenId(uint256 tokenId) public view returns(uint256 expirationTime){
+        return certificateExpirationTime[tokenId];
     }
 }

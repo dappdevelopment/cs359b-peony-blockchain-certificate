@@ -23,10 +23,18 @@ class MyCertificate extends Component {
   renderContent = () => {
     const { mode, tokenURIs } = this.state;
     if (mode != 'default') {
-      var sp = tokenURIs.split(", ");
-      return <div>{sp[mode]}</div>
+      //var sp = tokenURIs.split(", ");
+      //var tokenId = tokenIds.split(", ");
+      return( 
+                <div>
+                <div>Token Id: {this.state.tokenIds[mode]}</div>
+                <div>Content: {this.state.tokenURIs[mode]}</div>
+                <div>Issuer: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
+                <div>Expiration Time: <ContractData contract="PeonyCertificate" method="GetExpirationTimeByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
+                </div>
+            );
     } else {
-      return <div>Click contarct id to view name here...</div>
+      return (<div>Click contarct id to view name here...</div>);
     }
     // switch(mode) {
     //   case '1':
@@ -72,8 +80,8 @@ class MyCertificate extends Component {
           Promise.all(promisesURI).then(function(uris){
             //console.log(tokenIds);
             //console.log(uris);
-              self.state.tokenIds = values.join(', ');
-              self.state.tokenURIs = uris.join(', ');
+              self.state.tokenIds = values;
+              self.state.tokenURIs = uris;
 
               //generate data for menu
               for (var i = 0; i < balance; i++) {
