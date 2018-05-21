@@ -28,9 +28,10 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // Function to issue certificate to a receiver
     // _uri  : The JSON string data that we will put in certificate
-    function IssueCertificate(address _to, string _uri) public {
+    function IssueCertificate(address _to, string _uri, uint256 expirationTime) public {
         uint256 newTokenId = tokenId++;
-        super._mint(_to, newTokenId);
+        // super._mint(_to, newTokenId);
+        super._mint(_to, newTokenId, expirationTime); // not tested.. if set it here, need change mint
         super._setTokenURI(newTokenId, _uri);
         // Update issuer data
         uint256 issuerLength = issuedTokens[msg.sender].length;
