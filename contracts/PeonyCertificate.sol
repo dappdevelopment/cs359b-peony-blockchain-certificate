@@ -6,6 +6,12 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // These two are included in the open lib
     string internal name_ = "Peony";
     string internal symbol_ = "PNY";
+    // string internal VV = "VVV";
+    // string internal IV = "III";
+    bytes32 public VV = "VV";
+    bytes32 public II = "II";
+    uint256 yes = 1;
+    uint256 no = 0;
     uint256 tokenId = 1; // default tokenId for helping people to create unique id
 
     // our additional attirbutes for Issuer
@@ -17,7 +23,13 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // Mapping from token ID to issuer
     mapping (uint256 => address) internal tokenIssuer;
-    
+
+    // Mapping from token ID to Expiration time
+    mapping (uint256 => uint256) internal certificateExpirationTime;
+
+    // Mapping from token ID to Valid Cert
+    // mapping (uint256 => uint256) internal certificateIsValid;
+
     // constructor
     function PeonyCertificate() public { 
 
@@ -29,13 +41,51 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // Function to issue certificate to a receiver
     // _uri  : The JSON string data that we will put in certificate
     function IssueCertificate(address _to, string _uri) public {
+        this.IssueCertificate(_to, _uri, 0);
+    }
+
+    // OverLoaded function for regression
+    function IssueCertificate(address _to, string _uri, uint256 expirationTime) public {
         uint256 newTokenId = tokenId++;
         super._mint(_to, newTokenId);
         super._setTokenURI(newTokenId, _uri);
-        // Update issuer data
+        // Update issuer data and Addition Peony Features
         uint256 issuerLength = issuedTokens[msg.sender].length;
         issuedTokens[msg.sender].push(newTokenId);
         issuedTokensIndex[newTokenId] = issuerLength;
         tokenIssuer[newTokenId] = msg.sender;
+        // Add expireationTime stamp
+        certificateExpirationTime[newTokenId] = expirationTime;
     }
+
+    // Get Issuer address from provided tokentId
+    // 0: meaning the tokenId doesn't have mapped Issuer Address (more likely there is no such token)
+    function GetIssuerAddressByTokenId(uint256 tokenId) public view returns(address Issuer) {
+        return tokenIssuer[tokenId];
+    }
+
+    // Get Issuer address from provided tokentId
+    // 0: meaning the tokenId doesn't have mapped Issuer Address (more likely there is no such token)
+    function GetExpirationTimeByTokenId(uint256 tokenId) public view returns(uint256 expirationTime) {
+        return certificateExpirationTime[tokenId];
+    }
+
+    // function isCertificateValid(uint256 tokenId) public view returns(bool valid) {
+    // function isCertificateValid(uint256 tokenId) public view returns(byte32 valid) {
+    // function isCertificateValid(uint256 tokenId) public view returns(string valid) {
+    function isCertificateValid(uint256 tokenId) public view returns(uint256 valid) {
+        // expirationTime = GetExpirationTimeByTokenId(tokenId);
+        uint256 expirationTime = certificateExpirationTime[tokenId];        
+        if (now > expirationTime && expirationTime != 0) {
+            // return "valid!";
+            // return VV;
+            return yes;
+        } else {
+            // return "invalid!";
+            // return II;
+            return no;
+        }        
+    }
+
+     
 }

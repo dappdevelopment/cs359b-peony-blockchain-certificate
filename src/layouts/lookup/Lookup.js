@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
 import { Card, Col, Row, Layout, Alert, message, Button } from 'antd';
 import PropTypes from 'prop-types'
-import logo from '../../peonyLogo.png'
+// import logo from '../../peonyLogo.png'
+// if we ever change to a non-white background
+import logo from '../../peony_logo_white_background.png'
 import EditableCell from '../../components/EditableCell'
 
 class Lookup extends Component {
@@ -40,10 +42,10 @@ class Lookup extends Component {
         
       // </Layout >
       <div className="pure-u-1-1 header">
-            <img src={logo} alt="drizzle-logo" width="200px"/>
+            <img src={logo} alt="peony-logo" width="200px"/>
             <h1>Peony</h1>
             <div>
-              <p>Total Active Certificate Powered By Peony:<ContractData contract="PeonyCertificate" method="totalSupply"/></p>
+              <p>Total Active Certificate Powered By Peony: <ContractData contract="PeonyCertificate" method="totalSupply"/></p>
             </div>
             <br/><br/>
             <EditableCell />
@@ -51,7 +53,6 @@ class Lookup extends Component {
     );
   }
 }
-
 
 Lookup.contextTypes = {
   drizzle: PropTypes.object

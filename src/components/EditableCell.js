@@ -49,7 +49,12 @@ class EditableCell extends React.Component {
               />
             {
               !_.isEmpty(value) ?
+                <div>
                 <ContractData contract="PeonyCertificate" method="tokenURI" methodArgs={[value]}/>
+                <p></p>
+                <p>Issued By:  </p>
+                <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={[value]}/>
+                </div>
               :
                 <div/>
             }
