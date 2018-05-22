@@ -23,18 +23,22 @@ class MyCertificate extends Component {
   renderContent = () => {
     const { mode, tokenURIs } = this.state;
     if (mode != 'default') {
-      //var sp = tokenURIs.split(", ");
-      //var tokenId = tokenIds.split(", ");
+      // var sp = tokenURIs.split(", ");
+      // var tokenId = tokenIds.split(", ");
       return( 
                 <div>
                 <div>Token Id: {this.state.tokenIds[mode]}</div>
                 <div>Content: {this.state.tokenURIs[mode]}</div>
                 <div>Issuer: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
                 <div>Expiration Time: <ContractData contract="PeonyCertificate" method="GetExpirationTimeByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
+                <div>Is the Certificate Valid: <ContractData contract="PeonyCertificate" method="isCertificateValid" methodArgs={this.state.tokenIds[mode]}/></div>                 
                 </div>
             );
+            // this doens't work right now
+            // <div>Is the Certificate Valid:</div>
+            // <div>Is the Certificate Valid: <ContractData contract="PeonyCertificate" method="isCertificateValid" methodArgs={this.state.tokenIds[mode]}/></div>
     } else {
-      return (<div>Click contarct id to view name here...</div>);
+      return (<div>Click contarct id to view its name here...</div>);
     }
     // switch(mode) {
     //   case '1':
@@ -66,24 +70,24 @@ class MyCertificate extends Component {
     var menuItems = [];
     this.contracts.PeonyCertificate.methods.balanceOf(self.props.accounts[0]).call().then(function(balance){
         var promises = [];
-        for(var i = 0 ; i < balance ; i++){
+        for (var i = 0 ; i < balance ; i++) {
            promises.push( self.contracts.PeonyCertificate.methods.tokenOfOwnerByIndex(self.props.accounts[0], i).call());
         }
         var promisesURI = [];
 
         Promise.all(promises).then(function(values) {
-          //console.log(values);
-          values.forEach(function(v){
-            //console.log(v+"called");
+          // console.log(values);
+          values.forEach(function(v) {
+            // console.log(v+"called");
             promisesURI.push( self.contracts.PeonyCertificate.methods.tokenURI(v).call());
           });
           Promise.all(promisesURI).then(function(uris){
-            //console.log(tokenIds);
-            //console.log(uris);
+              // console.log(tokenIds);
+              // console.log(uris);
               self.state.tokenIds = values;
               self.state.tokenURIs = uris;
 
-              //generate data for menu
+              // generate data for menu
               for (var i = 0; i < balance; i++) {
                 menuItems.push(<Menu.Item key={i}>{values[i]}</Menu.Item>);
               }
