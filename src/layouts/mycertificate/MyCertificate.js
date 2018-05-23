@@ -19,6 +19,9 @@ class MyCertificate extends Component {
     });
   }
 
+  lockDownAccount = () => {
+    this.contracts.PeonyCertificate.methods.lockAccount().send({from: this.props.accounts[0]});
+  }
 
   renderContent = () => {
     const { mode, tokenURIs } = this.state;
@@ -95,7 +98,11 @@ class MyCertificate extends Component {
            });
         });
     }); 
-    
+    this.contracts.PeonyCertificate.methods.isAccountLocked().call().then(function(locked){
+      self.setState({
+        isAccountLocked: locked
+      });
+    });
     return (
       <Layout style={{ padding: '24px 24px', background: '#fff' }}>
                  
@@ -104,6 +111,13 @@ class MyCertificate extends Component {
             <h2>My Peony</h2>
             <p>You have 
             <strong></strong> <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate. (for now showing contract id)</p>
+            <div>
+              <Button type="danger"
+                onClick={this.lockDownAccount}
+                disabled={this.state.isAccountLocked}
+              > Lock Account!!!</Button>
+              <h3 hidden={!this.state.isAccountLocked} style={{color: 'red'}}>This Account Has Been Locked!!</h3>
+            </div>
           </div>
           {<Sider width={200} style={{ background: '#fff' }}>
             <Menu
