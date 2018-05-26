@@ -7,6 +7,10 @@ import PropTypes from 'prop-types'
 import logo from '../../peony_logo_white_background.png'
 import EditableCell from '../../components/EditableCell'
 
+import './css/style.css';
+// import styles from 'css/style.css';
+// import "css/style.css"
+
 class Lookup extends Component {
   constructor(props, context) {
     super(props)
@@ -44,7 +48,7 @@ class Lookup extends Component {
         
       </Layout >
  */
-
+    // <link href="css/style.css" rel="stylesheet"/>
     <div className="pure-u-1-1 header">
       <img src={logo} alt="peony-logo" width="200px"/>
       <h1>Peony</h1>
@@ -132,7 +136,7 @@ class Lookup extends Component {
       </div>
             
     </div>
-
+  
 
     );
   }
