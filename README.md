@@ -65,6 +65,7 @@ A multi-purposes certificate contract platform on ethereum
 
 
 ## Layout for tokenURI JSON string
+```
 {
  "ReceipientName": "Hans", 
  "IssuerName":"Stanford",
@@ -77,3 +78,4 @@ A multi-purposes certificate contract platform on ethereum
        "Ron, Professor"
   ]
 }
+```
