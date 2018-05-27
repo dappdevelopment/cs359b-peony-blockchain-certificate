@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
 import { Card, Col, Row, Layout, Alert, message, Button } from 'antd';
 import PropTypes from 'prop-types'
+
 // import logo from '../../peonyLogo.png'
 // if we ever change to a non-white background
+
 import logo from '../../peony_logo_white_background.png'
 import EditableCell from '../../components/EditableCell'
 
@@ -12,8 +14,26 @@ import planPic from './img/about-plan.jpg'
 import visionPic from './img/about-vision.jpg'
 
 
+import jquery_min_js from '../../../public/lib/jquery/jquery.min.js'
+// import jquery_migrate_min_js from '../../css/lib/jquery/jquery-migrate.min.js'
+// import bootstrap_bundle_min_js from '../../css/lib/bootstrap/js/bootstrap.bundle.min.js'
+// import easing_min_js from '../../css/lib/easing/easing.min.js'
+
+
 
 import './css/style.css';
+// import '../../css/lib/bootstrap/css/bootstrap.min.css';
+import '../../../public/lib/animate/animate.min.css';
+import '../../../public/lib/ionicons/css/ionicons.min.css';
+import '../../../public/lib/owlcarousel/assets/owl.carousel.min.css';
+import '../../../public/lib/lightbox/css/lightbox.min.css';
+
+
+import '../../../public/lib/bootstrap/css/bootstrap.min.css';
+
+
+
+
 // import styles from 'css/style.css';
 // import "css/style.css"
 
@@ -32,6 +52,21 @@ class Lookup extends Component {
 
   getPaid = () => {
   }
+
+
+  componentDidMount () {
+    const script = document.createElement("script");
+
+    // script.src = "https://use.typekit.net/foobar.js";
+    // script.src = "../../../public/lib/jquery/jquery.min.js'";
+    script.src = jquery_min_js;
+    
+    // script.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js";
+    // script.src = jquery_min_js;
+    script.async = true;
+
+    document.body.appendChild(script);
+}
 
   renderContent() {
     return (
@@ -145,6 +180,32 @@ class Lookup extends Component {
         </div>
   
       </div>
+          {/* <!-- JavaScript Libraries --> */}
+      {/* <script src="lib/jquery/jquery.min.js"></script>
+      <script src="lib/jquery/jquery-migrate.min.js"></script>
+      <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="lib/easing/easing.min.js"></script> */}
+      
+      {/* <script src={jquery_min_js}></script>
+      <script src={jquery_migrate_min_js}></script>
+      <script src={bootstrap_bundle_min_js}></script>
+      <script src={easing_min_js}></script> */}
+
+      
+      {/* <script src="lib/superfish/hoverIntent.js"></script>
+      <script src="lib/superfish/superfish.min.js"></script>
+      <script src="lib/wow/wow.min.js"></script>
+      <script src="lib/waypoints/waypoints.min.js"></script>
+      <script src="lib/counterup/counterup.min.js"></script>
+      <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+      <script src="lib/isotope/isotope.pkgd.min.js"></script>
+      <script src="lib/lightbox/js/lightbox.min.js"></script>
+      <script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+      {/* <!-- Contact Form JavaScript File --> */}
+      {/* <script src="contactform/contactform.js"></script> */}
+
+      {/* <!-- Template Main Javascript File --> */}
+      {/* <script src="js/main.js"></script> */} */}
             
     </div>
   
