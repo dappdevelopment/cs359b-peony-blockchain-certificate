@@ -7,6 +7,12 @@ import PropTypes from 'prop-types'
 import logo from '../../peony_logo_white_background.png'
 import EditableCell from '../../components/EditableCell'
 
+import missionPic from './img/about-mission.jpg'
+import planPic from './img/about-plan.jpg'
+import visionPic from './img/about-vision.jpg'
+
+
+
 import './css/style.css';
 // import styles from 'css/style.css';
 // import "css/style.css"
@@ -47,9 +53,12 @@ class Lookup extends Component {
         </div>
         
       </Layout >
- */
-    // <link href="css/style.css" rel="stylesheet"/>
+ */  
+        
     <div className="pure-u-1-1 header">
+      {/* <abnnn>Test component</abnnn>
+      <aaa>Test component</aaa> */}
+
       <img src={logo} alt="peony-logo" width="200px"/>
       <h1>Peony</h1>
       <div>
@@ -57,11 +66,11 @@ class Lookup extends Component {
       </div>
       <br/><br/>
       <EditableCell />
-
+  
 
       <div class="container">
         <div class="row">
-
+          
           <div class="col-lg-4 box">
             <i class="ion-ios-bookmarks-outline"></i>
             <h4 class="title"><a href="">You own your data</a></h4>
@@ -95,7 +104,9 @@ class Lookup extends Component {
           <div class="col-md-4 wow fadeInUp">
             <div class="about-col">
               <div class="img">
-                <img src="img/about-mission.jpg" alt="" class="img-fluid"/>
+                <img src={missionPic} alt="aaaaaaaaa" class="img-fluid"/>
+                {/* <img src="./src/layouts/lookup/img/about-mission.jpg" alt="aaaaaaaaa" class="img-fluid"/> */}
+                {/* <img src="../logo.png" alt="aaaaaaaaa" class="img-fluid"/> */}
                 <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
               </div>
               <h2 class="title"><a href="#">Our Mission</a></h2>
@@ -108,7 +119,7 @@ class Lookup extends Component {
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
             <div class="about-col">
               <div class="img">
-                <img src="img/about-plan.jpg" alt="" class="img-fluid"/>
+                <img src={planPic} alt="" class="img-fluid"/>
                 <div class="icon"><i class="ion-ios-list-outline"></i></div>
               </div>
               <h2 class="title"><a href="#">Our Plan</a></h2>
@@ -121,7 +132,7 @@ class Lookup extends Component {
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
             <div class="about-col">
               <div class="img">
-                <img src="img/about-vision.jpg" alt="" class="img-fluid"/>
+                <img src={visionPic} alt="" class="img-fluid"/>
                 <div class="icon"><i class="ion-ios-eye-outline"></i></div>
               </div>
               <h2 class="title"><a href="#">Our Vision</a></h2>
