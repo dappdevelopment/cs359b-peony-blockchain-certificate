@@ -13,9 +13,18 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-a {
+abnnn {
+  background: #000;
   color: #18d26e;
   transition: 0.5s;
+  font-family: "Open Sans", sans-serif;
+}
+
+aaa {
+  background: #000;
+  color: #18d26e;
+  transition: 0.5s;
+  font-family: "Open Sans", sans-serif;
 }
 
 a:hover, a:active, a:focus {
