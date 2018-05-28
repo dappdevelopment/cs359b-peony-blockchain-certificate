@@ -6,6 +6,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // These two are included in the open lib
     string internal name_ = "Peony";
     string internal symbol_ = "PNY";
+
     uint256 valid = 1;
     uint256 invalid = 0;
     uint256 tokenId = 1; // default tokenId for helping people to create unique id
@@ -21,7 +22,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     mapping (uint256 => address) internal tokenIssuer;
 
     // Mapping from token ID to Expiration time
-    mapping (uint256 => uint256) internal certificateExpirationTime;
+    mapping (uint256 => uint) internal certificateExpirationTime;
 
     // Mapping from token ID to Valid Cert
     // mapping (uint256 => uint256) internal certificateIsValid;
@@ -34,6 +35,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function PeonyCertificate() public { 
 
     }
+
     
     modifier onlyUnlocked() {
         require(!lockedDownAddresses[msg.sender]);
@@ -47,6 +49,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     }
 
     // OverLoaded function for regression
+
     function IssueCertificate(address _to, string _uri, uint256 expirationTime) onlyUnlocked public {
         uint256 newTokenId = tokenId++;
         super._mint(_to, newTokenId);
