@@ -31,7 +31,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // Mapping from token ID to Valid Cert
     // mapping (uint256 => uint256) internal certificateIsValid;
 
-    // Mapping from address to lockdown  (for account getting hacked,  so owner will have ability to 'lock down' the account)
+    // Mapping from address to lockdown  (for account getting hacked, 
+    // so owner will have ability to 'lock down' the account)
     mapping (address => bool) internal lockedDownAddresses;
 
     struct Signer{
@@ -50,12 +51,12 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function PeonyCertificate() public { 
 
     }
+
     
     modifier onlyUnlocked() {
         require(!lockedDownAddresses[msg.sender]);
         _;
     }
-
 
     // OverLoaded function for regression
     function IssueCertificateOld(address _to, string _uri, uint256 expTime) onlyUnlocked public {
@@ -117,36 +118,24 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         lockedDownAddresses[msg.sender] = true;
     }
 
-    //Helper view function to check if the account is locked
+    // Helper view function to check if the account is locked
     function isAccountLocked() public view returns(bool locked){
         return lockedDownAddresses[msg.sender];
     }
 
-    //Function to remove token from owner  for allowing users to remove unwanted certificates
+    // Function to remove token from owner  for allowing users to remove unwanted certificates
     function deleteCertificate(uint256 tokenId) onlyUnlocked public{
         removeTokenFrom(msg.sender, tokenId);
     }
 
-
-
-
-
-    // function isCertificateValid(uint256 tokenId) public view returns(bool valid) {
-    // function isCertificateValid(uint256 tokenId) public view returns(byte32 valid) {
-    // function isCertificateValid(uint256 tokenId) public view returns(string valid) {
-    function isCertificateValid(uint256 tokenId) public view returns(uint256 valid) {
-        // expirationTime = GetExpirationTimeByTokenId(tokenId);
+    // Function to check is a certificate is valid, now only check time
+    function isCertificateValid(uint256 tokenId) public view returns(uint256 valid) {        
         uint256 expirationTime = certificateExpirationTime[tokenId];        
         if (now > expirationTime && expirationTime != 0) {
-            // return "valid!";
-            // return VV;
-            return yes;
+            return valid;
         } else {
-            // return "invalid!";
-            // return II;
-            return no;
+            return invalid;
         }        
     }
-
      
 }

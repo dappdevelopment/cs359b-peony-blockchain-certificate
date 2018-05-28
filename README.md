@@ -62,3 +62,20 @@ A multi-purposes certificate contract platform on ethereum
 
 ## Material Design Used In This Project
 1. antd: https://ant.design/
+
+
+## Layout for tokenURI JSON string
+```
+{
+ "ReceipientName": "Hans", 
+ "IssuerName":"Stanford",
+ "Title":"St. Petershrb College",
+ "Body": "This is a testing diploma granted for Hans",
+ "CertificateBackGroundURL":"www.abc.com",
+ "BadgeURL": "www.badget.com",
+ "SignersNames" : [
+       "Peter, Principle", 
+       "Ron, Professor"
+  ]
+}
+```
