@@ -58,8 +58,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
 
     // OverLoaded function for regression
-    function IssueCertificate(address _to, string _uri) onlyUnlocked public {
-        this.IssueCertificate(_to, _uri, 0, new address[](0), new byte[100][](0));
+    function IssueCertificateOld(address _to, string _uri, uint256 expTime) onlyUnlocked public {
+        this.IssueCertificate(_to, _uri, expTime, new address[](0), new byte[100][](0));
     }
 
     // Function to issue certificate to a receiver

@@ -38,7 +38,7 @@ class IssueCertificate extends Component {
           <h2>Issue My Peony</h2>
           <p>Create and issue new certificate!</p>
           {/* <p><strong>List</strong>: <ContractForm contract="PeonyCertificate" method="IssueCertificate"  labels={['To Address', 'Customer Text']} /></p> */}
-          <p><strong></strong><ContractForm contract="PeonyCertificate" method="IssueCertificate"  labels={['To Address', 'Customer Text', 'Expiration Time in (uint timestamp)']} /></p>
+          <p><strong></strong><ContractForm contract="PeonyCertificate" method="IssueCertificateOld"  labels={['To Address', 'Customer Text', 'Expiration Time in (uint timestamp)']} /></p>
           <br/><br/>
         </div>
         {/* <Content style={{ padding: '0 24px', minHeight: 280 }}>
