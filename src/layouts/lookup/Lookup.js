@@ -87,6 +87,31 @@ class Lookup extends Component {
     // loadScript('%PUBLIC_URL%/lib/test.js');
     // loadScript('%PUBLIC_URL%/lib/bootstrap/js/bootstrap.bundle.min.js');
 
+
+    (function(){
+
+      var head = document.getElementsByTagName('head')[0];
+    
+      loadScript = function(filename){
+        var node = document.createElement('script');
+        node.src = filename;
+    
+        head.appendChild(node);
+    
+      }        
+      
+      loadScript('../../../public/lib/jquery/jquery.min.js')
+      loadScript('../../../public/lib/bootstrap/js/bootstrap.bundle.min.js')
+      
+    
+    }());
+
+
+
+
+    
+
+
     return (
 
 /*
@@ -135,6 +160,8 @@ class Lookup extends Component {
 
 
 <body>
+
+  {/* <div class="container">  */}
 
 
     {/* <!--==========================
@@ -256,7 +283,7 @@ class Lookup extends Component {
   </section>
 
 
-  {/* <section> */}
+    {/* <section id ="peony"> */}
     <div className="pure-u-1-1 header">
       {/* <abnnn>Test component</abnnn>
       <aaa>Test component</aaa> */}
@@ -295,10 +322,10 @@ class Lookup extends Component {
       </div>    
           
     
-      <div class="container">
-    {/* <section/> */}
+      {/* <div class="container">  */}
+    {/* </section> */}
   
-
+  <main id="main">
 
   {/* ### About Us ### */}
   <section id="about">
@@ -928,7 +955,7 @@ class Lookup extends Component {
 
 
 
-
+  </main>
 
 
 
@@ -1008,43 +1035,41 @@ class Lookup extends Component {
 
 
 
-
-
-
-
-
-
-
-
-
-
          { /* <!-- JavaScript Libraries --> */}
       
+
+
       
-      <script src='%PUBLIC_URL%/lib/jquery/jquery.min.js'></script>
-      <script src="%PUBLIC_URL%/lib/jquery/jquery-migrate.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/easing/easing.min.js"></script> 
+
+
+      <script crossorigin src='../../../public/lib/jquery/jquery.min.js'></script>
+      <script crossorigin src="../../../public/lib/jquery/jquery-migrate.min.js"></script>
+      <script crossorigin src="../../../public/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script crossorigin src="../../../public/lib/easing/easing.min.js"></script> 
+      
+       <script crossorigin src="../../../public/lib/superfish/hoverIntent.js"></script>
+      <script crossorigin src="../../../public/lib/superfish/superfish.min.js"></script>
+      <script src="../../../public/lib/wow/wow.min.js"></script>
+      <script src="../../../public/lib/waypoints/waypoints.min.js"></script>
+      <script src="../../../public/lib/counterup/counterup.min.js"></script>
+      <script src="../../../public/lib/owlcarousel/owl.carousel.min.js"></script>
+      <script src="../../../public/lib/isotope/isotope.pkgd.min.js"></script>
+      <script src="../../../public/lib/lightbox/js/lightbox.min.js"></script>
+      <script src="../../../public/lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+      <script src="../../../public/lib/test.js"></script>
+
+      <script src="../../../public/contactform/contactform.js"></script>
+      <script src="../../../public/js/main.js"></script>
+  
+
+
+
 {/*       
       <script src={jquery_min_js}></script>
       <script src={jquery_migrate_min_js}></script>
       <script src={bootstrap_bundle_min_js}></script>
-      <script src={easing_min_js}></script>  */}
-
-      
-      <script src="%PUBLIC_URL%/lib/superfish/hoverIntent.js"></script>
-      <script src="%PUBLIC_URL%/lib/superfish/superfish.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/wow/wow.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/waypoints/waypoints.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/counterup/counterup.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/owlcarousel/owl.carousel.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/isotope/isotope.pkgd.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/lightbox/js/lightbox.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/touchSwipe/jquery.touchSwipe.min.js"></script>
-      <script src="%PUBLIC_URL%/lib/test.js"></script>
-
-      <script src="%PUBLIC_URL%/contactform/contactform.js"></script>
-      <script src="%PUBLIC_URL%/js/main.js"></script>
+      <script src={easing_min_js}></script>  
+  */}
 
 
 
@@ -1056,10 +1081,10 @@ class Lookup extends Component {
       {/* <!-- Template Main Javascript File --> */}
       {/* <script src="js/main.js"></script> */}
             
-    </div>
+    {/* </div> */}
   
   </body>
-</html>
+ </html>
 
     );
   }
