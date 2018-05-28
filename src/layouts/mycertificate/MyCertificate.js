@@ -22,14 +22,21 @@ class MyCertificate extends Component {
 
   renderContent = () => {
     const { mode, tokenURIs } = this.state;
+    var d = new Date();
     if (mode != 'default') {
       // var sp = tokenURIs.split(", ");
       // var tokenId = tokenIds.split(", ");
+      var obj = JSON.parse(this.state.tokenURIs[mode]);
       return( 
                 <div>
                 <div>Token Id: {this.state.tokenIds[mode]}</div>
-                <div>Content: {this.state.tokenURIs[mode]}</div>
-                <div>Issuer: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
+                <div>Recipient Address: {obj.address}</div>
+                <div>Recipient Name: {obj.recipientName}</div>
+                <div>Certificate Title: {obj.title}</div>
+                <div>Certificate Content: {obj.body}</div>
+                <div>Background Image Url: {obj.bckgrdImg}</div>
+                <div>Badge Image Url: {obj.bdgImg}</div>
+                <div>Issuer Address: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
                 <div>Expiration Time: <ContractData contract="PeonyCertificate" method="GetExpirationTimeByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
                 <div>Is the Certificate Valid: <ContractData contract="PeonyCertificate" method="isCertificateValid" methodArgs={this.state.tokenIds[mode]}/></div>                 
                 </div>
@@ -68,14 +75,14 @@ class MyCertificate extends Component {
     var tokenIds = [];
     var tokenURIs = [];
     var menuItems = [];
-    console.log("!");
-    var temp;
+    // console.log("!");
+    // var temp;
     
-    temp = this.contracts.PeonyCertificate.methods.debug().call().then(function(err, accs) {
-      temp = accs;
-    });
-    console.log(temp);
-    console.log("@");
+    // temp = this.contracts.PeonyCertificate.methods.debug().call().then(function(err, accs) {
+    //   temp = accs;
+    // });
+    // console.log(temp);
+    // console.log("@");
     this.contracts.PeonyCertificate.methods.balanceOf(self.props.accounts[0]).call().then(function(balance){
         
         var promises = [];
@@ -91,13 +98,14 @@ class MyCertificate extends Component {
             promisesURI.push( self.contracts.PeonyCertificate.methods.tokenURI(v).call());
           });
           Promise.all(promisesURI).then(function(uris){
-              // console.log(tokenIds);
+              // console.log(tokenURIs);
               // console.log(uris);
               self.state.tokenIds = values;
               self.state.tokenURIs = uris;
 
               // generate data for menu
               for (var i = 0; i < balance; i++) {
+                
                 menuItems.push(<Menu.Item key={i}>{values[i]}</Menu.Item>);
               }
               self.state.menuItems = menuItems;
