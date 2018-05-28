@@ -3,7 +3,8 @@ import { AccountData, ContractData, ContractForm } from 'drizzle-react-component
 import { Card, Col, Row, Layout, Alert, message, Button, Menu } from 'antd';
 const { Content, Sider, Header } = Layout;
 import PropTypes from 'prop-types'
-
+import badget from '../../../public/img/MSFTBadge.png'
+import CertBackground from '../../../public/img/CertBackGround.jpg'
 class MyCertificate extends Component {
   constructor(props, context) {
     super(props)
@@ -40,8 +41,61 @@ class MyCertificate extends Component {
                 <div>Background Image Url: {obj.bckgrdImg}</div>
                 <div>Badge Image Url: {obj.bdgImg}</div>
                 <div>Issuer Address: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
-                <div>Expiration Time: <ContractData contract="PeonyCertificate" method="GetExpirationTimeByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
+                <div hidden={this.state.tokensExpTime[mode] == 0} >Expiration Time: {this.state.tokensExpTime[mode]}</div>
+                <h3 hidden={this.state.tokensExpTime[mode] == 0 || Date.now() <= this.state.tokensExpTime[mode]} style={{color: 'red'}}>This Certificate Is Expired!!</h3>
                 <div>Is the Certificate Valid: <ContractData contract="PeonyCertificate" method="isCertificateValid" methodArgs={this.state.tokenIds[mode]}/></div>                 
+                <br/>
+                <br/>
+                <div id="Certificate Shot" style={{width:'800px',height:'566px',padding: "30px 30px 30px 30px",backgroundImage: `url(${CertBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+                    <div id="Certificate Paper" style={{padding: "50px 50px 50px 50px", width: '500px', horizontalAlign: "middle", verticalAlign: "middle"}}>
+                    <table style={{width: '500px', horizontalAlign: "middle"}}>
+                      <tr>
+                        <table style={{width: '500px', verticalAlign: "top"}} id="Top">
+                          <th><img src={badget} width="150px" style={{display: 'inline-block'}}/></th>
+                          <th style={{align: 'top'}} >
+                            <div style={{align: 'top'}}>
+                            <div>Stanford Dapp Dev Graduation Certificate</div>
+                            <div>Receiptient: Hans Wang  (Address: 012392132)</div>
+                            <div>Issuer: Stanford (Address:012345)</div>
+                            </div>
+                          </th>
+                        </table>
+                      </tr>
+                      <tr></tr>
+                      <tr>
+                        <td>
+                          We are gald to see Hans complete a set of courses and blah blah balh balh 
+                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
+                          We are gald to see Hans complete a set of courses and blah blah balh balh 
+                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
+                          We are gald to see Hans complete a set of courses and blah blah balh balh 
+                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
+                          We are gald to see Hans complete a set of courses and blah blah balh balh 
+                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
+                        </td>
+                      </tr>
+                      <tr>
+                        <br/>
+                        <br/>
+                        <br/>
+                      </tr>
+                      <tr>
+                        <table style={{width: '500px'}} id="Top">
+                        <tr>
+                          <td><i>John</i></td>
+                          <td><i>God</i></td> 
+                          <td><i>Marry</i></td>
+                        </tr>
+                        <tr>
+                          <td>Principle: John</td>
+                          <td>Priciple2: Me</td> 
+                          <td>Principle3: Hehe</td>
+                        </tr>
+                        </table>
+                      </tr>
+                    </table>
+                    </div>
+                 </div>
                 </div>
             );
             // this doens't work right now
@@ -50,30 +104,12 @@ class MyCertificate extends Component {
     } else {
       return (<div>Click contarct id to view its name here...</div>);
     }
-    // switch(mode) {
-    //   case '1':
-    //     // return <Fund account={account} payroll={payroll} web3={web3} />
-       
-    //   case '2':
-    //     // return <EmployeeList account={account} payroll={payroll} web3={web3} />
-    //     return <div>{this.state.tokenURIs[1]}</div>
-    //   case 'default':
-    //     return <div>you have no certificate!!!!!!</div>
-    // }
+
   }
 
   render() {
     const { account, payroll, web3 } = this.props;
-    // var dataKey = this.contracts.PeonyCertificate.methods.balanceOf.cacheCall([this.props.accounts[0]]);
-    // console.log(dataKey);
-    // if(!(dataKey in this.props.PeonyCertificate.balanceOf)) {
-    //  console.log("Waiting...");
-    //  console.log(this.props);
-    // }else{
-    //   console.log(this.props);
-    //   console.log(this.props.PeonyCertificate.balanceOf[dataKey].value);  
-    
-    // }
+
     var self = this;
     var tokenIds = [];
     var tokenURIs = [];
@@ -93,19 +129,19 @@ class MyCertificate extends Component {
            promises.push( self.contracts.PeonyCertificate.methods.tokenOfOwnerByIndex(self.props.accounts[0], i).call());
         }
         var promisesURI = [];
-
+        var promisesExpTime = [];
         Promise.all(promises).then(function(values) {
           // console.log(values);
           values.forEach(function(v) {
             // console.log(v+"called");
             promisesURI.push( self.contracts.PeonyCertificate.methods.tokenURI(v).call());
+            promisesExpTime.push(self.contracts.PeonyCertificate.methods.GetExpirationTimeByTokenId(v).call());
           });
           Promise.all(promisesURI).then(function(uris){
               // console.log(tokenURIs);
               // console.log(uris);
               self.state.tokenIds = values;
               self.state.tokenURIs = uris;
-
               // generate data for menu
               for (var i = 0; i < balance; i++) {
                 
@@ -113,12 +149,14 @@ class MyCertificate extends Component {
               }
               self.state.menuItems = menuItems;
            });
+
+           Promise.all(promisesExpTime).then(function(expTimes){
+              self.state.tokensExpTime = expTimes;
+           });
         });
     }); 
     this.contracts.PeonyCertificate.methods.isAccountLocked().call().then(function(locked){
-      self.setState({
-        isAccountLocked: locked
-      });
+      self.state.isAccountLocked = locked;
     });
     return (
       <Layout style={{ padding: '24px 24px', background: '#fff' }}>
