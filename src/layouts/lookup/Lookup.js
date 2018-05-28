@@ -64,45 +64,72 @@ class Lookup extends Component {
   // }
 
 
-  
-
-  renderContent() {
-    return (
-      <div>
-        <h2>To do!!!!!</h2>
-      </div>
-    );
-  }
-
-  render() {
-    // import styles from 'css/style.css';
-    // import "css/style.css"
+  render() {    
     var loadScript = function(src) {
       var tag = document.createElement('script');
       tag.async = false;
       tag.src = src;
       document.getElementsByTagName('body').appendChild(tag);
+      console.log(tag)
+
     };
+    
     // loadScript('%PUBLIC_URL%/lib/jquery/jquery.min.js')
     // loadScript('%PUBLIC_URL%/lib/test.js');
     // loadScript('%PUBLIC_URL%/lib/bootstrap/js/bootstrap.bundle.min.js');
 
 
+      // console.log(document)
+
+
+  //   console.log("!!!!! in the function");
+  //   // console.log("Node!!!!!!!!!!", node);
+  // console.log("============  loadScript('../../../public/lib/jquery/jquery.min.js') ==============");
+
+
     (function(){
 
+      
       var head = document.getElementsByTagName('head')[0];
     
       loadScript = function(filename){
         var node = document.createElement('script');
+
+        
         node.src = filename;
     
         head.appendChild(node);
     
-      }        
+      }
       
-      loadScript('../../../public/lib/jquery/jquery.min.js')
-      loadScript('../../../public/lib/bootstrap/js/bootstrap.bundle.min.js')
+
+      // loadScript(jquery_min_js)      
+
+      // loadScript('../../../public/lib/jquery/jquery.min.js')
+      // loadScript('../../../public/lib/bootstrap/js/bootstrap.bundle.min.js')      
+      // loadScript('../../../public/lib/jquery/jquery.min.js')
+      // loadScript("../../../public/lib/jquery/jquery-migrate.min.js")
+
+
+      // loadScript("../../../public/lib/bootstrap/js/bootstrap.bundle.min.js")
+      // loadScript("../../../public/lib/easing/easing.min.js") 
       
+      // loadScript("../../../public/lib/superfish/hoverIntent.js")
+      // loadScript("../../../public/lib/superfish/superfish.min.js")
+      // loadScript("../../../public/lib/wow/wow.min.js")
+      // loadScript("../../../public/lib/waypoints/waypoints.min.js")
+      // loadScript("../../../public/lib/counterup/counterup.min.js")
+      // loadScript("../../../public/lib/owlcarousel/owl.carousel.min.js")
+      // loadScript("../../../public/lib/isotope/isotope.pkgd.min.js")
+      // loadScript("../../../public/lib/lightbox/js/lightbox.min.js")
+      // loadScript("../../../public/lib/touchSwipe/jquery.touchSwipe.min.js")
+      // loadScript("../../../public/lib/test.js")
+
+      // loadScript("../../../public/contactform/contactform.js")
+      // loadScript("../../../public/js/main.js")
+  
+
+
     
     }());
 
@@ -1042,12 +1069,13 @@ class Lookup extends Component {
       
 
 
+   {/*
       <script crossorigin src='../../../public/lib/jquery/jquery.min.js'></script>
       <script crossorigin src="../../../public/lib/jquery/jquery-migrate.min.js"></script>
       <script crossorigin src="../../../public/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script crossorigin src="../../../public/lib/easing/easing.min.js"></script> 
       
-       <script crossorigin src="../../../public/lib/superfish/hoverIntent.js"></script>
+      <script crossorigin src="../../../public/lib/superfish/hoverIntent.js"></script>
       <script crossorigin src="../../../public/lib/superfish/superfish.min.js"></script>
       <script src="../../../public/lib/wow/wow.min.js"></script>
       <script src="../../../public/lib/waypoints/waypoints.min.js"></script>
@@ -1060,7 +1088,7 @@ class Lookup extends Component {
 
       <script src="../../../public/contactform/contactform.js"></script>
       <script src="../../../public/js/main.js"></script>
-  
+   */}
 
 
 
