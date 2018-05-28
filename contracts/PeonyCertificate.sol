@@ -12,6 +12,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     bytes32 public II = "II";
     uint256 yes = 1;
     uint256 no = 0;
+    uint256 valid = 1;
+    uint256 invalid=0;
     uint256 erc721TokenId = 1; // default tokenId for helping people to create unique id
     //Decalre max length of the names to accept
     uint256 MAX_LENGTH = 100;
