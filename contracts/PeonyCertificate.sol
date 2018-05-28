@@ -10,8 +10,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // string internal IV = "III";
     bytes32 public VV = "VV";
     bytes32 public II = "II";
-    uint256 yes = 1;
-    uint256 no = 0;
+    uint256 yes = 123;
+    uint256 no = 345;
     uint256 tokenId = 1; // default tokenId for helping people to create unique id
 
     // our additional attirbutes for Issuer
@@ -25,7 +25,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     mapping (uint256 => address) internal tokenIssuer;
 
     // Mapping from token ID to Expiration time
-    mapping (uint256 => uint256) internal certificateExpirationTime;
+    mapping (uint256 => uint) internal certificateExpirationTime;
 
     // Mapping from token ID to Valid Cert
     // mapping (uint256 => uint256) internal certificateIsValid;
@@ -34,8 +34,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function PeonyCertificate() public { 
 
     }
-    function debug() public view returns(uint){
-        return tokenId;
+    function debug(uint256 tokenId) public view returns(uint expTime){
+        return certificateExpirationTime[tokenId];
     }
     
     // Function to issue certificate to a receiver
@@ -45,7 +45,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     }
 
     // OverLoaded function for regression
-    function IssueCertificate(address _to, string _uri, uint256 expirationTime) public {
+    function IssueCertificate(address _to, string _uri, uint expirationTime) public {
         uint256 newTokenId = tokenId++;
         super._mint(_to, newTokenId);
         super._setTokenURI(newTokenId, _uri);
@@ -69,14 +69,15 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function GetExpirationTimeByTokenId(uint256 tokenId) public view returns(uint256 expirationTime) {
         return certificateExpirationTime[tokenId];
     }
-
+    
     // function isCertificateValid(uint256 tokenId) public view returns(bool valid) {
     // function isCertificateValid(uint256 tokenId) public view returns(byte32 valid) {
     // function isCertificateValid(uint256 tokenId) public view returns(string valid) {
     function isCertificateValid(uint256 tokenId) public view returns(uint256 valid) {
-        // expirationTime = GetExpirationTimeByTokenId(tokenId);
+        //return 12345;
+        expirationTime = GetExpirationTimeByTokenId(tokenId);
         uint256 expirationTime = certificateExpirationTime[tokenId];        
-        if (now > expirationTime && expirationTime != 0) {
+        if (block.timestamp > expirationTime && expirationTime != 0) {
             // return "valid!";
             // return VV;
             return yes;

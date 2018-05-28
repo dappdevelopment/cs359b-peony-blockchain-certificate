@@ -65,10 +65,54 @@ class MyForm extends Component {
         'bdgImg': '',
         'expTime': '',
         'jsonUrl': '',
+        // for add signer
+        name: '',
+        signers: [{ name: '', address: ''}],
         
     };
     this.handleChange = this.handleChange.bind(this);
   }
+
+  handleSignerNameChange = (idx) => (evt) => {
+    const newSigners = this.state.signers.map((signer, sidx) => {
+      if (idx !== sidx) return signer;
+      return { ...signer, name: evt.target.value };
+    });
+
+    this.setState({ signers: newSigners });
+  }
+
+  handleSignerAddressChange = (idx) => (evt) => {
+    const newSigners = this.state.signers.map((signer, sidx) => {
+      if (idx !== sidx) return signer;
+      return { ...signer, address: evt.target.value };
+    });
+
+    this.setState({ signers: newSigners });
+  }
+
+  handleSignerSubmit = (evt) => {
+    const { name, signers } = this.state;
+    alert(`Incorporated: ${name} with ${signers.length} signers`);
+  }
+
+  handleAddSigner = () => {
+    console.log(this.state.signers)
+    this.setState({
+      signers: this.state.signers.concat([{ name: '', address: '' }])
+    });
+  }
+
+  handleRemoveSigner = (idx) => () => {
+    this.setState({
+      signers: this.state.signers.filter((s, sidx) => idx !== sidx)
+    });
+  }
+
+
+
+
+
 
   handleSubmit() {
     // this.contracts[this.props.contract].methods[this.props.method].cacheSend(...Object.values(this.state));
@@ -126,12 +170,20 @@ class MyForm extends Component {
   render() {
     return (
       <form className="pure-form pure-form-stacked">
-        <input type='text' name='address' placeholder='To Address' onChange={this.handleInputChange} />
-        <input type='text' name='recipientName' placeholder='Recipient Name' onChange={this.handleInputChange} />
-        <input type='text' name='title' placeholder='Certificate Title' onChange={this.handleInputChange} />
-        <input type='text' name='body' placeholder='Body' onChange={this.handleInputChange} />
-        <input type='text' name='bckgrdImg' placeholder='Background Image Url' onChange={this.handleInputChange} />
-        <input type='text' name='bdgImg' placeholder='Badge Image Url' onChange={this.handleInputChange} />
+    {/* <form> */}
+        <table>
+            <tr>
+                <td>Address: <input type='text' name='address' placeholder='To Address' onChange={this.handleInputChange} /></td>
+                <td>Recipient Name: <input type='text' name='recipientName' placeholder='Recipient Name' onChange={this.handleInputChange} /></td>
+                <td>Certificate Title: <input type='text' name='title' placeholder='Certificate Title' onChange={this.handleInputChange} /></td>
+            </tr>
+            <tr>    
+                <td><input type='text' name='body' placeholder='Body' onChange={this.handleInputChange} /></td>
+                <td><input type='text' name='bckgrdImg' placeholder='Background Image Url' onChange={this.handleInputChange} /></td>
+                <td><input type='text' name='bdgImg' placeholder='Badge Image Url' onChange={this.handleInputChange} /></td>
+            </tr>
+
+        </table>
         <Toggle
             defaultChecked={ true }
             label='Enabled and checked'
@@ -149,7 +201,29 @@ class MyForm extends Component {
               onChange={this.handleChange} />
             :
               <div/>
-          }
+        }
+        <form onSubmit={this.handleSignerSubmit}>
+            
+            <h4>Add Signer</h4>
+
+            {this.state.signers.map((signer, idx) => (
+            <div className="signer">
+                <table>
+                    <tr>
+                        <td><input type="text" placeholder={`Signer #${idx + 1} name`} value={signer.name} onChange={this.handleSignerNameChange(idx)}/></td>
+                        <td><input type="text" placeholder={`Signer #${idx + 1} address`} value={signer.address} onChange={this.handleSignerAddressChange(idx)}/></td>
+                        <td><button type="button" onClick={this.handleRemoveSigner(idx)} className="small">-</button></td>
+                    </tr>
+                </table>
+            </div>
+            ))}
+            <button type="button" onClick={this.handleAddSigner} className="small">Add Signer</button>
+            <button>Incorporate</button>
+        </form>
+
+
+
+
         {/* {this.inputs.map((input, index) => {            
             var inputType = this.translateType(input.type)
             var inputLabel = this.props.labels ? this.props.labels[index] : input.name
