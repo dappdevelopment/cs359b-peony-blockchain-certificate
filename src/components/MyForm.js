@@ -118,7 +118,7 @@ class MyForm extends Component {
     // this.contracts[this.props.contract].methods[this.props.method].cacheSend(...Object.values(this.state));
     this.concatenate();
     console.log("json is:"+JSON.stringify(this.state['jsonUrl']));
-    this.contracts[this.props.contract].methods[this.props.method].cacheSend(this.state['address'], JSON.stringify(this.state['jsonUrl']),this.state['startDate'].unix());
+    this.contracts[this.props.contract].methods[this.props.method].cacheSend(this.state['address'], JSON.stringify(this.state['jsonUrl']),this.state['startDate'].unix()*1000);
   }
 
   handleInputChange(event) {
