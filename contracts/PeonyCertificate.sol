@@ -12,8 +12,9 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     bytes32 public II = "II";
     uint256 yes = 1;
     uint256 no = 0;
-    uint256 tokenId = 1; // default tokenId for helping people to create unique id
-
+    uint256 erc721TokenId = 1; // default tokenId for helping people to create unique id
+    //Decalre max length of the names to accept
+    uint256 MAX_LENGTH = 100;
     // our additional attirbutes for Issuer
     // Mapping from token ID to index of the issuer's issued tokens list
     mapping(uint256 => uint256) internal issuedTokensIndex;
@@ -33,6 +34,18 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // Mapping from address to lockdown  (for account getting hacked,  so owner will have ability to 'lock down' the account)
     mapping (address => bool) internal lockedDownAddresses;
 
+    struct Signer{
+        byte[100] name;
+        address singerAddr;
+        string signature;
+    }
+
+    // Mapping tokenId to Signer Struct 
+    mapping (uint256 => mapping(address => Signer)) TokenSigners;
+
+    // Mapping to a list of signers
+    mapping (uint256 => Signer[]) TokenSignersList;
+
     // constructor
     function PeonyCertificate() public { 
 
@@ -43,15 +56,16 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         _;
     }
 
-    // Function to issue certificate to a receiver
-    // _uri  : The JSON string data that we will put in certificate
-    function IssueCertificate(address _to, string _uri) onlyUnlocked public {
-        this.IssueCertificate(_to, _uri, 0);
-    }
 
     // OverLoaded function for regression
-    function IssueCertificate(address _to, string _uri, uint256 expirationTime) onlyUnlocked public {
-        uint256 newTokenId = tokenId++;
+    function IssueCertificate(address _to, string _uri) onlyUnlocked public {
+        this.IssueCertificate(_to, _uri, 0, new address[](0), new byte[100][](0));
+    }
+
+    // Function to issue certificate to a receiver
+    // _uri  : The JSON string data that we will put in certificate
+    function IssueCertificate(address _to, string _uri, uint256 expirationTime, address[] signAddr, byte[100][] names) onlyUnlocked public {
+        uint256 newTokenId = erc721TokenId++;
         super._mint(_to, newTokenId);
         super._setTokenURI(newTokenId, _uri);
         // Update issuer data and Addition Peony Features
@@ -61,6 +75,28 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         tokenIssuer[newTokenId] = msg.sender;
         // Add expireationTime stamp
         certificateExpirationTime[newTokenId] = expirationTime;
+        // Add signers to the token list
+        for(uint256 i = 0 ; i < signAddr.length ; i++){
+            TokenSigners[newTokenId][signAddr[i]] = Signer(names[i], signAddr[i], "");
+            Signer storage t = TokenSigners[newTokenId][signAddr[i]];
+            TokenSignersList[newTokenId].push(t); //share the referneces so can share the same updates actions
+        }
+    }
+
+    //For signer to find a particular tokenId and sign the certificate
+    function signCertificate(uint256 tokenId, string signature) onlyUnlocked public {
+        //signatures[tokenId][msg.sender] = signature;
+        TokenSigners[tokenId][msg.sender].signature = signature;
+    }
+
+    //Get total number of signer
+    function getNumberOfSigners(uint256 tokenId) public view returns(uint256 numberOfSigners) {
+        return TokenSignersList[tokenId].length;
+    }
+
+    //Get signature from certificate signers list
+    function getSignature(uint256 tokenId, uint256 index) public view returns(string signature){
+        return TokenSignersList[tokenId][index].signature;
     }
 
     // Get Issuer address from provided tokentId
