@@ -39,7 +39,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         require(!lockedDownAddresses[msg.sender]);
         _;
     }
-
+    
     // Function to issue certificate to a receiver
     // _uri  : The JSON string data that we will put in certificate
     function IssueCertificate(address _to, string _uri) onlyUnlocked public {
