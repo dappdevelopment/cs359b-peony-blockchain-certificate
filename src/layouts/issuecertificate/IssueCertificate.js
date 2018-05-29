@@ -64,6 +64,7 @@ class IssueCertificate extends Component {
       <Layout style={{ padding: '24px 24px', background: '#fff'}}>
         {/* <div className="pure-u-1-1"> */}
         <div>
+          <ContractForm contract="PeonyCertificate" method="IssueCertificate"/>
           <h2>Issue My Peony</h2>
           <p>Create and issue new certificate!</p>
           {/* <p><strong>List</strong>: <ContractForm contract="PeonyCertificate" method="IssueCertificate"  labels={['To Address', 'Customer Text']} /></p> */}
