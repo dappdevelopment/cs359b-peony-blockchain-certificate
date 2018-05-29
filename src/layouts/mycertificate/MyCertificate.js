@@ -4,6 +4,7 @@ import { Card, Col, Row, Layout, Alert, message, Button, Menu } from 'antd';
 const { Content, Sider, Header } = Layout;
 import PropTypes from 'prop-types'
 import badget from '../../../public/img/MSFTBadge.png'
+import defaultBadget from '../../../public/img/Peony.jpg'
 import CertBackground from '../../../public/img/CertBackGround.jpg'
 class MyCertificate extends Component {
   constructor(props, context) {
@@ -31,6 +32,18 @@ class MyCertificate extends Component {
       // var sp = tokenURIs.split(", ");
       // var tokenId = tokenIds.split(", ");
       var obj = JSON.parse(this.state.tokenURIs[mode]);
+      var stub_signerName = ['John Biden', 'Bush George', 'JinYian', 'Hans', 'Andy'];
+      var stub_signerSignature = ['John', 'BG', 'JYian', 'H', 'A'];
+      var stub_signerAddr = ['0x012312432235325','0x0412325325454','0x124143534643', '0x0123122412412','0x012312312412412'];
+      var signerNames = [];
+      var signerSignartures = [];
+      var signerAddrs = [];
+      stub_signerName.forEach(function(c, i){
+        signerNames.push(<td>{c}</td>);
+      });
+      stub_signerSignature.forEach(function(c){
+        signerSignartures.push(<td><i>{c}</i></td>);
+      });
       return( 
                 <div>
                 <div>Token Id: {this.state.tokenIds[mode]}</div>
@@ -47,16 +60,16 @@ class MyCertificate extends Component {
                 <br/>
                 <br/>
                 <div id="Certificate Shot" style={{width:'800px',height:'566px',padding: "30px 30px 30px 30px",backgroundImage: `url(${CertBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-                    <div id="Certificate Paper" style={{padding: "50px 50px 50px 50px", width: '500px', horizontalAlign: "middle", verticalAlign: "middle"}}>
-                    <table style={{width: '500px', horizontalAlign: "middle"}}>
+                    <div id="Certificate Paper" style={{padding: "50px 50px 50px 50px", horizontalAlign: "middle", verticalAlign: "middle"}}>
+                    <table style={{width: '700', height: '466px' , horizontalAlign: "middle"}}>
                       <tr>
                         <table style={{width: '500px', verticalAlign: "top"}} id="Top">
-                          <th><img src={badget} width="150px" style={{display: 'inline-block'}}/></th>
+                          <th><img src={obj.bdgImg} width="150px" style={{padding: "10px 10px 10px 10px", display: 'inline-block'}} onError={(e)=>{e.target.src=defaultBadget}}/></th>
                           <th style={{align: 'top'}} >
                             <div style={{align: 'top'}}>
-                            <div>Stanford Dapp Dev Graduation Certificate</div>
-                            <div>Receiptient: Hans Wang  (Address: 012392132)</div>
-                            <div>Issuer: Stanford (Address:012345)</div>
+                            <div>{obj.title}</div>
+                            <div>Receiptient: {obj.recipientName}  (Address: {obj.address})</div>
+                            <div>Issuer: Stanford (Address:<ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/>)</div>
                             </div>
                           </th>
                         </table>
@@ -64,14 +77,7 @@ class MyCertificate extends Component {
                       <tr></tr>
                       <tr>
                         <td>
-                          We are gald to see Hans complete a set of courses and blah blah balh balh 
-                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
-                          We are gald to see Hans complete a set of courses and blah blah balh balh 
-                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
-                          We are gald to see Hans complete a set of courses and blah blah balh balh 
-                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
-                          We are gald to see Hans complete a set of courses and blah blah balh balh 
-                          fdafdaf djakf; eiaefajk;! fdajfk dajfa fhajkf hjk!/?  fdajfkd;a fdjakl;
+                          {obj.body}
                         </td>
                       </tr>
                       <tr>
@@ -82,14 +88,10 @@ class MyCertificate extends Component {
                       <tr>
                         <table style={{width: '500px'}} id="Top">
                         <tr>
-                          <td><i>John</i></td>
-                          <td><i>God</i></td> 
-                          <td><i>Marry</i></td>
+                           {signerSignartures}
                         </tr>
                         <tr>
-                          <td>Principle: John</td>
-                          <td>Priciple2: Me</td> 
-                          <td>Principle3: Hehe</td>
+                           {signerNames}
                         </tr>
                         </table>
                       </tr>
