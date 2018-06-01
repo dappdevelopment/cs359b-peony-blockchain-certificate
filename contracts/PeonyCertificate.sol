@@ -1,19 +1,14 @@
 pragma solidity ^0.4.18;
 import "zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "./lib/strings.sol";
 // References: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.8.0/contracts/token/ERC721/ERC721Token.sol
 
 contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
+    using strings for *;
     // These two are included in the open lib
     string internal name_ = "Peony";
     string internal symbol_ = "PNY";
-    // string internal VV = "VVV";
-    // string internal IV = "III";
-    bytes32 public VV = "VV";
-    bytes32 public II = "II";
-    uint256 yes = 1;
-    uint256 no = 0;
-    uint256 valid = 1;
-    uint256 invalid=0;
+
     uint256 erc721TokenId = 1; // default tokenId for helping people to create unique id
     //Decalre max length of the names to accept
     uint256 MAX_LENGTH = 100;
@@ -38,7 +33,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     mapping (address => bool) internal lockedDownAddresses;
 
     struct Signer{
-        byte[100] name;
+        string name;
         address singerAddr;
         string signature;
     }
@@ -51,7 +46,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // constructor
     function PeonyCertificate() public { 
-
+        //Do some initialization
     }
 
     
@@ -62,12 +57,16 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // OverLoaded function for regression
     function IssueCertificateOld(address _to, string _uri, uint256 expTime) onlyUnlocked public {
-        this.IssueCertificate(_to, _uri, expTime, new address[](0), new byte[100][](0));
+        this.IssueCertificate(_to, _uri, expTime, new address[](0), "");
     }
 
     // Function to issue certificate to a receiver
+    // _to   : The recipient's wallet address
     // _uri  : The JSON string data that we will put in certificate
-    function IssueCertificate(address _to, string _uri, uint256 expirationTime, address[] signAddr, byte[100][] names) onlyUnlocked public {
+    // expirationTime  : The time of expiration
+    // signAddr : The list of addresses to be the signer of the certificate (those signer will need to get on and sign it individually later on)
+    // names  : The names of the signers (is ';' delimetered string)
+    function IssueCertificate(address _to, string _uri, uint256 expirationTime, address[] signAddr, string names) onlyUnlocked public {
         uint256 newTokenId = erc721TokenId++;
         super._mint(_to, newTokenId);
         super._setTokenURI(newTokenId, _uri);
@@ -78,11 +77,14 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         tokenIssuer[newTokenId] = msg.sender;
         // Add expireationTime stamp
         certificateExpirationTime[newTokenId] = expirationTime;
+        // Get names ready to be split by strings.sol
+        var sliceName = names.toSlice();
+        var delim = ";".toSlice();
         // Add signers to the token list
         for(uint256 i = 0 ; i < signAddr.length ; i++){
-            TokenSigners[newTokenId][signAddr[i]] = Signer(names[i], signAddr[i], "");
-            Signer storage t = TokenSigners[newTokenId][signAddr[i]];
-            TokenSignersList[newTokenId].push(t); //share the referneces so can share the same updates actions
+            TokenSigners[newTokenId][signAddr[i]] = Signer(sliceName.split(delim).toString(), signAddr[i], "");
+            //share the referneces so can share the same updates actions
+            TokenSignersList[newTokenId].push(TokenSigners[newTokenId][signAddr[i]]); 
         }
     }
 
@@ -128,16 +130,6 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // Function to remove token from owner  for allowing users to remove unwanted certificates
     function deleteCertificate(uint256 tokenId) onlyUnlocked public{
         removeTokenFrom(msg.sender, tokenId);
-    }
-
-    // Function to check is a certificate is valid, now only check time
-    function isCertificateValid(uint256 tokenId) public view returns(uint256 valid) {        
-        uint256 expirationTime = certificateExpirationTime[tokenId];        
-        if (now > expirationTime && expirationTime != 0) {
-            return valid;
-        } else {
-            return invalid;
-        }        
     }
      
 }
