@@ -1,17 +1,20 @@
 pragma solidity ^0.4.18;
 import "zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
+
 import "./lib/strings.sol";
 // References: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.8.0/contracts/token/ERC721/ERC721Token.sol
 
 contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     using strings for *;
+    using SafeMath for uint256;
+
     // These two are included in the open lib
     string internal name_ = "Peony";
     string internal symbol_ = "PNY";
 
     uint256 erc721TokenId = 1; // default tokenId for helping people to create unique id
-    //Decalre max length of the names to accept
-    uint256 MAX_LENGTH = 100;
+
     // our additional attirbutes for Issuer
     // Mapping from token ID to index of the issuer's issued tokens list
     mapping(uint256 => uint256) internal issuedTokensIndex;
@@ -19,11 +22,20 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // Mapping from issuer to list of issued token IDs
     mapping (address => uint256[]) internal issuedTokens;
 
+    // Mapping for issuer to know how many certificates it has issued
+    mapping (address => uint256) internal issuedTokensCount;
+
     // Mapping from token ID to issuer
     mapping (uint256 => address) internal tokenIssuer;
 
     // Mapping from token ID to Expiration time
     mapping (uint256 => uint256) internal certificateExpirationTime;
+
+    // Mapping for indicating if the token is revokable or not.
+    mapping (uint256 => bool) internal revokableCertificates;
+
+    // Mapping for indicating if the token is revoked or not.
+    mapping (uint256 => bool) internal isCertificateRevoked;
 
     // Mapping from token ID to Valid Cert
     // mapping (uint256 => uint256) internal certificateIsValid;
@@ -57,7 +69,7 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // OverLoaded function for regression
     function IssueCertificateOld(address _to, string _uri, uint256 expTime) onlyUnlocked public {
-        this.IssueCertificate(_to, _uri, expTime, new address[](0), "");
+        this.IssueCertificate(_to, _uri, expTime, new address[](0), "", false);
     }
 
     // Function to issue certificate to a receiver
@@ -66,15 +78,19 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     // expirationTime  : The time of expiration
     // signAddr : The list of addresses to be the signer of the certificate (those signer will need to get on and sign it individually later on)
     // names  : The names of the signers (is ';' delimetered string)
-    function IssueCertificate(address _to, string _uri, uint256 expirationTime, address[] signAddr, string names) onlyUnlocked public {
+    function IssueCertificate(address _to, string _uri, uint256 expirationTime, address[] signAddr, string names, bool revokable) 
+    onlyUnlocked public {
+        //New generated token Id
         uint256 newTokenId = erc721TokenId++;
         super._mint(_to, newTokenId);
         super._setTokenURI(newTokenId, _uri);
         // Update issuer data and Addition Peony Features
+        isCertificateRevoked[newTokenId] = false; //new certificate always has not yet been revoked
         uint256 issuerLength = issuedTokens[msg.sender].length;
         issuedTokens[msg.sender].push(newTokenId);
         issuedTokensIndex[newTokenId] = issuerLength;
         tokenIssuer[newTokenId] = msg.sender;
+        issuedTokensCount[msg.sender] = issuedTokensCount[msg.sender].add(1);
         // Add expireationTime stamp
         certificateExpirationTime[newTokenId] = expirationTime;
         // Get names ready to be split by strings.sol
@@ -86,6 +102,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
             //share the referneces so can share the same updates actions
             TokenSignersList[newTokenId].push(TokenSigners[newTokenId][signAddr[i]]); 
         }
+        //populate map for revokable list
+        revokableCertificates[newTokenId] = revokable;
     }
 
     //For signer to find a particular tokenId and sign the certificate
@@ -129,7 +147,28 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     // Function to remove token from owner  for allowing users to remove unwanted certificates
     function deleteCertificate(uint256 tokenId) onlyUnlocked public{
-        removeTokenFrom(msg.sender, tokenId);
+        super.removeTokenFrom(msg.sender, tokenId);
     }
      
+    // Function to revoke the certificate
+    // Has to be the issuer and the certificate is revokable.
+    function revokeCertificate(uint256 tokenId) onlyUnlocked public{
+        require(revokableCertificates[tokenId] == true);
+        require(tokenIssuer[tokenId] == msg.sender);
+        //Set revoked flag to true
+        isCertificateRevoked[tokenId] = true;
+    }
+
+    // Check if the certificate has been revoked or not
+    function isCertificateRevokedByIssuer(uint256 tokenId) public view returns(bool revoked){
+        return isCertificateRevoked[tokenId];
+    }
+     
+    //Helper function to return if certificate is valid
+    //Currently only verify if the certificate is revoke or not.
+    function isCertificateValid(uint256 tokenId) public view returns(bool valid){
+        bool isValid = true;
+        isValid = isValid && !isCertificateRevoked[tokenId];  //check if the certificate is revoked or not
+        return isValid;
+    }
 }
