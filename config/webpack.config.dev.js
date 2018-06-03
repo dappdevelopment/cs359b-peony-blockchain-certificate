@@ -81,6 +81,18 @@ module.exports = {
   },
 
   module: {
+    rule: [
+      // Use html loader for plain html page
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            attrs: [':data-src']
+          }
+        }
+      }
+    ],
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
     preLoaders: [
