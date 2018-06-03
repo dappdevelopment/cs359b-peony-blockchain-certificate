@@ -21,6 +21,8 @@ import LookupContainer from '../lookup/LookupContainer';
 
 import 'antd/dist/antd.css';
 import '../../App.css';
+// import IntroPage from '../../../public/intro/index.html';
+// var IntroDoc =  {__html: IntroPage};
 
 const { Header, Content, Footer } = Layout;
 
@@ -50,6 +52,8 @@ class Home extends Component {
         return <MyCertificateContainer />
       case 'Lookup':
         return <LookupContainer />
+      case 'Intro': 
+        return <a href='/intro/index.html' target='_blank'>link to test.html</a>
       default:
         return <LookupContainer />
     }
@@ -139,6 +143,7 @@ class Home extends Component {
                 <Menu.Item key="Lookup">Look up</Menu.Item>
                 <Menu.Item key="IssueCertificate">Create New Certificate</Menu.Item>
                 <Menu.Item key="MyCertificate">View My Certificate</Menu.Item>
+                <Menu.Item key="Intro">Who Are We</Menu.Item>
               </Menu>
             </Header>
             <Content style={{ padding: '0 50px' }}>
