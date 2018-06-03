@@ -126,14 +126,18 @@ class MyForm extends Component {
       signersAddresses.push(a.address);
       signersNames.push(a.name);
     });
+    if (this.state.isToggleOn == 1) {
+      this.state['startDate'] = 0;
+    } else {
+      this.state['startDate'] = this.state['startDate'].unix()*1000;
+    }
     var signersNamesStr = signersNames.join(';');
     this.contracts[this.props.contract].methods[this.props.method].cacheSend(
       this.state['address'], 
       JSON.stringify(this.state['jsonUrl']),
-      this.state['startDate'].unix()*1000, 
+      this.state['startDate'], 
       signersAddresses,
-      signersNamesStr,
-      {from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57'});
+      signersNamesStr);
     // this.contracts.PeonyCertificate.methods.IssueCertificate(
     //   this.state['address'], 
     //   JSON.stringify(this.state['jsonUrl']),
