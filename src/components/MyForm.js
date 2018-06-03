@@ -5,6 +5,7 @@ import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+var web3 = require('web3');
 /*
  * Create component.
  */
@@ -118,7 +119,30 @@ class MyForm extends Component {
     // this.contracts[this.props.contract].methods[this.props.method].cacheSend(...Object.values(this.state));
     this.concatenate();
     console.log("json is:"+JSON.stringify(this.state['jsonUrl']));
-    this.contracts[this.props.contract].methods[this.props.method].cacheSend(this.state['address'], JSON.stringify(this.state['jsonUrl']),this.state['startDate'].unix()*1000);
+    //console.log([web3.utils.asciiToHex("Wang!")]);
+    var signersAddresses = [];
+    var signersNames = [];
+    this.state.signers.forEach(function(a){
+      signersAddresses.push(a.address);
+      signersNames.push(a.name);
+    });
+    var signersNamesStr = signersNames.join(';');
+    this.contracts[this.props.contract].methods[this.props.method].cacheSend(
+      this.state['address'], 
+      JSON.stringify(this.state['jsonUrl']),
+      this.state['startDate'].unix()*1000, 
+      signersAddresses,
+      signersNamesStr,
+      {from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57'});
+    // this.contracts.PeonyCertificate.methods.IssueCertificate(
+    //   this.state['address'], 
+    //   JSON.stringify(this.state['jsonUrl']),
+    //   this.state['startDate'].unix()*1000, 
+    //   ['0x627306090abaB3A6e1400e9345bC60c78a8BEf57', '0x627306090abaB3A6e1400e9345bC60c78a8BEf57'],
+    //   [,[web3.utils.asciiToHex('Name1'),web3.utils.asciiToHex('Name2')]],
+    // ).send({from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57'}, function(error){
+    //   console.log(error); 
+    // });
   }
 
   handleInputChange(event) {

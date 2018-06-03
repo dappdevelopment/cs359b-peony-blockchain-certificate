@@ -56,7 +56,6 @@ class MyCertificate extends Component {
                 <div>Issuer Address: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
                 <div hidden={this.state.tokensExpTime[mode] == 0} >Expiration Time: {this.state.tokensExpTime[mode]}</div>
                 <h3 hidden={this.state.tokensExpTime[mode] == 0 || Date.now() <= this.state.tokensExpTime[mode]} style={{color: 'red'}}>This Certificate Is Expired!!</h3>
-                <div>Is the Certificate Valid: <ContractData contract="PeonyCertificate" method="isCertificateValid" methodArgs={this.state.tokenIds[mode]}/></div>                 
                 <br/>
                 <br/>
                 <div id="Certificate Shot" style={{width:'800px',height:'566px',padding: "30px 30px 30px 30px",backgroundImage: `url(${CertBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
