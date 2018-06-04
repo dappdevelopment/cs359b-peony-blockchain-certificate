@@ -117,11 +117,6 @@ class MyForm extends Component {
     });
   }
 
-
-
-
-
-
   handleSubmit() {
     console.log("revokable" + this.state.radioChecked)
     console.log("toggle" + this.state.isToggleOn)

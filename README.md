@@ -79,3 +79,6 @@ A multi-purposes certificate contract platform on ethereum
   ]
 }
 ```
+### Time unit
+Time unit is (ns) 
+NOT ms
