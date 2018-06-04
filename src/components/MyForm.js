@@ -61,7 +61,7 @@ class MyForm extends Component {
 
     this.state = {
         mode: 'default',
-        isToggleOn: false,
+        isToggleOn: true,
         radioChecked: false,
         currentYear: (new Date()).getFullYear(),
         startDate: moment(),
@@ -123,7 +123,8 @@ class MyForm extends Component {
 
 
   handleSubmit() {
-    console.log(this.state.radioChecked)
+    console.log("revokable" + this.state.radioChecked)
+    console.log("toggle" + this.state.isToggleOn)
     // this.contracts[this.props.contract].methods[this.props.method].cacheSend(...Object.values(this.state));
     this.concatenate();
     console.log("json is:"+JSON.stringify(this.state['jsonUrl']));
@@ -134,7 +135,7 @@ class MyForm extends Component {
       signersAddresses.push(a.address);
       signersNames.push(a.name);
     });
-    if (this.state.isToggleOn == 1) {
+    if (this.state.isToggleOn == 0) {
       this.state['startDate'] = 0;
     } else {
       this.state['startDate'] = this.state['startDate'].unix()*1000;
@@ -145,7 +146,9 @@ class MyForm extends Component {
       JSON.stringify(this.state['jsonUrl']),
       this.state['startDate'],
       signersAddresses,
-      signersNamesStr);
+      signersNamesStr, 
+      this.state.radioChecked
+    );
     // this.contracts.PeonyCertificate.methods.IssueCertificate(
     //   this.state['address'], 
     //   JSON.stringify(this.state['jsonUrl']),
@@ -239,7 +242,7 @@ class MyForm extends Component {
             onClick = {this.toggleExpPanel}
         />
         {
-            ! this.state.isToggleOn ?
+            this.state.isToggleOn ?
               <DatePicker
               dateFormat="YYYY/MM/DD"
               selected={this.state.startDate}
