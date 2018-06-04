@@ -6,6 +6,12 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 var web3 = require('web3');
+import { Input } from 'antd';
+const { TextArea } = Input;
+import { Radio } from 'antd';
+
+
+
 /*
  * Create component.
  */
@@ -56,6 +62,7 @@ class MyForm extends Component {
     this.state = {
         mode: 'default',
         isToggleOn: false,
+        radioChecked: false,
         currentYear: (new Date()).getFullYear(),
         startDate: moment(),
         'address': '',
@@ -116,6 +123,7 @@ class MyForm extends Component {
 
 
   handleSubmit() {
+    console.log(this.state.radioChecked)
     // this.contracts[this.props.contract].methods[this.props.method].cacheSend(...Object.values(this.state));
     this.concatenate();
     console.log("json is:"+JSON.stringify(this.state['jsonUrl']));
@@ -135,7 +143,7 @@ class MyForm extends Component {
     this.contracts[this.props.contract].methods[this.props.method].cacheSend(
       this.state['address'], 
       JSON.stringify(this.state['jsonUrl']),
-      this.state['startDate'], 
+      this.state['startDate'],
       signersAddresses,
       signersNamesStr);
     // this.contracts.PeonyCertificate.methods.IssueCertificate(
@@ -166,6 +174,13 @@ class MyForm extends Component {
     }));
   }
 
+
+  radioChecked = radioChecked => {
+    this.setState(prevState => ({
+      radioChecked: !prevState.radioChecked
+    }));
+    
+  }
 
 
   concatenate() {
@@ -205,13 +220,15 @@ class MyForm extends Component {
                 <td>Recipient Name: <input type='text' name='recipientName' placeholder='Recipient Name' onChange={this.handleInputChange} /></td>
                 <td>Certificate Title: <input type='text' name='title' placeholder='Certificate Title' onChange={this.handleInputChange} /></td>
             </tr>
-            <tr>    
+            <tr>
+                <td><TextArea type='text' name='body' placeholder='Body' onChange={this.handleInputChange}/></td>    
                 <td><input type='text' name='body' placeholder='Body' onChange={this.handleInputChange} /></td>
                 <td><input type='text' name='bckgrdImg' placeholder='Background Image Url' onChange={this.handleInputChange} /></td>
                 <td><input type='text' name='bdgImg' placeholder='Badge Image Url' onChange={this.handleInputChange} /></td>
             </tr>
 
         </table>
+        <Radio onClick={this.radioChecked} checked={this.state.radioChecked}>Revokable</Radio>
         <Toggle
             defaultChecked={ true }
             label='Enabled and checked'
