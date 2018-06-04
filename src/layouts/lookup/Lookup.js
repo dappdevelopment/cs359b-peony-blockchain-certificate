@@ -28,6 +28,16 @@ class Lookup extends Component {
   // getPaid = () => {
   // }
 
+  // checkSigner() {
+  //   // get signer and check if this account is in the signer array,
+  //   // if yes, ask if he wants to sign or not 
+  //   <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/>
+  //   this.props.accounts[0];
+  //   <ContractForm contract="PeonyCertificate" method="signCertificate"  labels={['tokenId', 'signature']} />
+  //   return 
+  // }
+
+
   renderContent() {
     return (
       <div>
@@ -58,6 +68,7 @@ class Lookup extends Component {
       </div>
       <br/><br/>
       <EditableCell />
+
             
     </div>
   

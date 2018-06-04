@@ -7,18 +7,20 @@ import _ from 'underscore'
 class EditableCell extends React.Component {
   state = {
     value: this.props.value,
-    editable: false,
+    editable: true,
   }
   handleChange = (e) => {
     const value = e.target.value;
     this.setState({ value });
   }
   check = () => {
-    this.setState({ editable: false });
+    // this.setState({ editable: false });
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
     console.log("!")
+    console.log(this.state.value)
+    
   }
   edit = () => {
     this.setState({ editable: true });
@@ -27,14 +29,14 @@ class EditableCell extends React.Component {
     const { value, editable } = this.state;
     return (
       <div className="editable-cell">
-        {
-          editable ?
+        
+           {/* editable ? */}
             <div className="editable-cell-input-wrapper">
             
             <Search
               placeholder="input search text"
               onSearch={value => {console.log(value); this.check(); this.setState({value});}}
-              
+              // onChange={this.handleChange}
               enterButton
             />
 
@@ -45,23 +47,25 @@ class EditableCell extends React.Component {
                 onPressEnter={this.check}
                 
               /> */}
-              <Icon
+              {/* <Icon
                 type="check"
                 className="editable-cell-icon-check"
                 onClick={this.check}
-              />
+              /> */}
             </div>
-            :
+             {/* : */}
             <div className="editable-cell-text-wrapper">
               {value || ' '}
-              <Icon
+              {/* <Icon
                 type="edit"
                 className="editable-cell-icon"
                 onClick={this.edit}
-              />
+              /> */}
+              
             {
               !_.isEmpty(value) ?
                 <div>
+                  True value: {value}
                 <ContractData contract="PeonyCertificate" method="tokenURI" methodArgs={[value]}/>
                 <p></p>
                 <p>Issued By:  </p>
@@ -71,7 +75,7 @@ class EditableCell extends React.Component {
                 <div/>
             }
             </div>
-        }
+        
       </div>
     );
   }
