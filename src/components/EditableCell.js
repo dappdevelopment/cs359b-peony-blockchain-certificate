@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Input, Icon } from 'antd';
+const Search = Input.Search;
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
 import _ from 'underscore'
 
@@ -17,6 +18,7 @@ class EditableCell extends React.Component {
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
+    console.log("!")
   }
   edit = () => {
     this.setState({ editable: true });
@@ -28,11 +30,21 @@ class EditableCell extends React.Component {
         {
           editable ?
             <div className="editable-cell-input-wrapper">
-              <Input
+            
+            <Search
+              placeholder="input search text"
+              onSearch={value => {console.log(value); this.check(); this.setState({value});}}
+              
+              enterButton
+            />
+
+
+              {/* <Input
                 value={value}
                 onChange={this.handleChange}
                 onPressEnter={this.check}
-              />
+                
+              /> */}
               <Icon
                 type="check"
                 className="editable-cell-icon-check"
