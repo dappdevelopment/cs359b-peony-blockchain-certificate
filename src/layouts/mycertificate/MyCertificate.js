@@ -6,6 +6,9 @@ import PropTypes from 'prop-types'
 import badget from '../../../public/img/MSFTBadge.png'
 import defaultBadget from '../../../public/img/Peony.jpg'
 import CertBackground from '../../../public/img/CertBackGround.jpg'
+import CertificatePreview from '../../components/CertificatePreview'
+
+
 class MyCertificate extends Component {
   constructor(props, context) {
     super(props)
@@ -29,80 +32,23 @@ class MyCertificate extends Component {
     const { mode, tokenURIs } = this.state;
     var d = new Date();
     if (mode != 'default') {
-      // var sp = tokenURIs.split(", ");
-      // var tokenId = tokenIds.split(", ");
-      var obj = JSON.parse(this.state.tokenURIs[mode]);
-      var stub_signerName = ['John Biden', 'Bush George', 'JinYian', 'Hans', 'Andy'];
-      var stub_signerSignature = ['John', 'BG', 'JYian', 'H', 'A'];
-      var stub_signerAddr = ['0x012312432235325','0x0412325325454','0x124143534643', '0x0123122412412','0x012312312412412'];
-      var signerNames = [];
-      var signerSignartures = [];
-      var signerAddrs = [];
-      stub_signerName.forEach(function(c, i){
-        signerNames.push(<td>{c}</td>);
-      });
-      stub_signerSignature.forEach(function(c){
-        signerSignartures.push(<td><i>{c}</i></td>);
-      });
+      var tokenId = this.state.tokenIds[mode];
+      var tokenURI = this.state.tokenURIs[mode];
+      var tokenExpTime = this.state.tokensExpTime[mode];
+      var tokenSigners = [
+        {
+          name: "Hans Wang",
+          signature: "CW",
+          address: "0x0123",
+          dateSigned: Date.now()
+        }
+      ];
       return( 
-                <div>
-                <div>Token Id: {this.state.tokenIds[mode]}</div>
-                <div>Recipient Address: {obj.address}</div>
-                <div>Recipient Name: {obj.recipientName}</div>
-                <div>Certificate Title: {obj.title}</div>
-                <div>Certificate Content: {obj.body}</div>
-                <div>Background Image Url: {obj.bckgrdImg}</div>
-                <div>Badge Image Url: {obj.bdgImg}</div>
-                <div>Issuer Address: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/></div>
-                <div hidden={this.state.tokensExpTime[mode] == 0} >Expiration Time: {this.state.tokensExpTime[mode]}</div>
-                <h3 hidden={this.state.tokensExpTime[mode] == 0 || Date.now() <= this.state.tokensExpTime[mode]} style={{color: 'red'}}>This Certificate Is Expired!!</h3>
-                <br/>
-                <br/>
-                <div id="Certificate Shot" style={{width:'800px',height:'566px',padding: "30px 30px 30px 30px",backgroundImage: `url(${CertBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-                    <div id="Certificate Paper" style={{padding: "50px 50px 50px 50px", horizontalAlign: "middle", verticalAlign: "middle"}}>
-                    <table style={{width: '700', height: '466px' , horizontalAlign: "middle"}}>
-                      <tr>
-                        <table style={{width: '500px', verticalAlign: "top"}} id="Top">
-                          <th><img src={obj.bdgImg} width="150px" style={{padding: "10px 10px 10px 10px", display: 'inline-block'}} onError={(e)=>{e.target.src=defaultBadget}}/></th>
-                          <th style={{align: 'top'}} >
-                            <div style={{align: 'top'}}>
-                            <div>{obj.title}</div>
-                            <div>Receiptient: {obj.recipientName}  (Address: {obj.address})</div>
-                            <div>Issuer: Stanford (Address:<ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenIds[mode]}/>)</div>
-                            </div>
-                          </th>
-                        </table>
-                      </tr>
-                      <tr></tr>
-                      <tr>
-                        <td>
-                          {obj.body}
-                        </td>
-                      </tr>
-                      <tr>
-                        <br/>
-                        <br/>
-                        <br/>
-                      </tr>
-                      <tr>
-                        <table style={{width: '500px'}} id="Top">
-                        <tr>
-                           {signerSignartures}
-                        </tr>
-                        <tr>
-                           {signerNames}
-                        </tr>
-                        </table>
-                      </tr>
-                    </table>
-                    </div>
-                 </div>
-                </div>
+              <div>
+              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={tokenSigners}/>
+              </div>
             );
-            // this doens't work right now
-            // <div>Is the Certificate Valid:</div>
-            // <div>Is the Certificate Valid: <ContractData contract="PeonyCertificate" method="isCertificateValid" methodArgs={this.state.tokenIds[mode]}/></div>
-    } else {
+      } else {
       return (<div>Click contarct id to view its name here...</div>);
     }
 
