@@ -46,8 +46,9 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
 
     struct Signer{
         string name;
-        address singerAddr;
+        address signerAddr;
         string signature;
+        uint256 dateSigned;
     }
 
     // Mapping tokenId to Signer Struct 
@@ -94,11 +95,11 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         // Add expireationTime stamp
         certificateExpirationTime[newTokenId] = expirationTime;
         // Get names ready to be split by strings.sol
-        var sliceName = names.toSlice();
-        var delim = ";".toSlice();
+        strings.slice memory sliceName = names.toSlice();
+        strings.slice memory delim = ";".toSlice();
         // Add signers to the token list
         for(uint256 i = 0 ; i < signAddr.length ; i++){
-            TokenSigners[newTokenId][signAddr[i]] = Signer(sliceName.split(delim).toString(), signAddr[i], "");
+            TokenSigners[newTokenId][signAddr[i]] = Signer(sliceName.split(delim).toString(), signAddr[i], "", 0);
             //share the referneces so can share the same updates actions
             TokenSignersList[newTokenId].push(TokenSigners[newTokenId][signAddr[i]]); 
         }
@@ -107,9 +108,10 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     }
 
     //For signer to find a particular tokenId and sign the certificate
-    function signCertificate(uint256 tokenId, string signature) onlyUnlocked public {
+    function signCertificate(uint256 tokenId, string signature, uint dateSigned) onlyUnlocked public {
         //signatures[tokenId][msg.sender] = signature;
         TokenSigners[tokenId][msg.sender].signature = signature;
+        TokenSigners[tokenId][msg.sender].dateSigned = dateSigned;
     }
 
     //Get total number of signer
@@ -121,6 +123,14 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function getSignature(uint256 tokenId, uint256 index) public view returns(string signature){
         return TokenSignersList[tokenId][index].signature;
     }
+
+    //Get Signer Object from certificate signers list by index
+    function getSigner(uint256 tokenId, uint256 index) public view 
+    returns(string name, address signerAddress, string signature, uint256 dateSigned){
+        Signer memory signer = TokenSignersList[tokenId][index];
+        return (signer.name, signer.signerAddr, signer.signature, signer.dateSigned);
+    }
+
 
     // Get Issuer address from provided tokentId
     // 0: meaning the tokenId doesn't have mapped Issuer Address (more likely there is no such token)
