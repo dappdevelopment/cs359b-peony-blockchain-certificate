@@ -75,7 +75,8 @@ class MyForm extends Component {
         'jsonUrl': '',
         // for add signer
         name: '',
-        signers: [{ name: '', address: ''}],
+        // signers: [{ name: '', address: ''}],
+        signers: []
         
     };
     this.handleChange = this.handleChange.bind(this);
