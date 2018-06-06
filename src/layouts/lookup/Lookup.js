@@ -67,7 +67,7 @@ class Lookup extends Component {
         <p>Total Active Certificate Powered By Peony: <ContractData contract="PeonyCertificate" method="totalSupply"/></p>
       </div>
       <br/><br/>
-      <EditableCell />
+      <EditableCell accountsAddr={this.props.accounts[0]}/>
 
             
     </div>
