@@ -37,8 +37,54 @@ class CertificatePreview extends Component {
         */
     };
   }
+  onSelectTab = ({key}) => {
+    this.setState({
+      mode: key
+    });
+  }
 
+  lockDownAccount = () => {
+    this.contracts.PeonyCertificate.methods.lockAccount().send({from: this.props.accounts[0]});
+  }
+
+  renderContent = () => {
+    const { mode, tokenURIs } = this.state;
+    var d = new Date();
+    if (mode != 'default') {
+      var tokenId = this.state.tokenIds[mode];
+      var tokenURI = this.state.tokenURIs[mode];
+      var tokenExpTime = this.state.tokensExpTime[mode];
+      var tokenSigners = [
+        {
+          name: "Hans Wang",
+          signature: "CW",
+          address: "0x0123",
+          dateSigned: Date.now()
+        }
+      ];
+      return( 
+              <div>
+              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={tokenSigners}/>
+              </div>
+            );
+      } else {
+      return (<div>Click contarct id to view its name here...</div>);
+    }
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("Received new props");
+    this.setState({ 
+      tokenId : this.props.tokenId,
+      tokenURI : this.props.tokenURI,
+      tokenExpTime : this.props.tokenExpTime,
+      tokenSigners : this.props.tokenSigners 
+    });
+  }
+  
   render() {
+    
     var d = new Date();
     var obj = JSON.parse(this.state.tokenURI);
     var signerNames = [];
