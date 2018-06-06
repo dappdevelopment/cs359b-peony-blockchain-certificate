@@ -107,6 +107,17 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         revokableCertificates[newTokenId] = revokable;
     }
 
+    //IssuedTokens getter by tokenId
+    function getTotalIssuedTokens(address _issuer) public view returns(uint256 total){
+        return issuedTokensCount[_issuer];
+    }
+
+    //Get IssuedTokensByIssuerIndex
+    function tokenOfIssuerByIndex(address _owner, uint _index) public view returns(uint256 tokenId){
+        require(_index < getTotalIssuedTokens(_owner));
+        return issuedTokens[_owner][_index];
+    }
+
     //For signer to find a particular tokenId and sign the certificate
     function signCertificate(uint256 tokenId, string signature, uint dateSigned) onlyUnlocked public {
         //signatures[tokenId][msg.sender] = signature;
