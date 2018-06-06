@@ -54,10 +54,9 @@ class MyCertificate extends Component {
       var tokenId = this.state.tokenIds[mode];
       var tokenURI = this.state.tokenURIs[mode];
       var tokenExpTime = this.state.tokensExpTime[mode];
-      var tokenRevoked = this.state.tokensRevoked[mode]
       return( 
               <div>
-              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={this.state.tokenSigners[tokenId]} revokable={tokenRevoked}/>
+              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={this.state.tokenSigners[tokenId]}/>
               </div>
             );
       } else {
@@ -89,14 +88,12 @@ class MyCertificate extends Component {
         }
         var promisesURI = [];
         var promisesExpTime = [];
-        var promisesRevoked = [];
         Promise.all(promises).then(function(values) {
           // console.log(values);
           values.forEach(function(v) {
             // console.log(v+"called");
             promisesURI.push( self.contracts.PeonyCertificate.methods.tokenURI(v).call());
             promisesExpTime.push(self.contracts.PeonyCertificate.methods.GetExpirationTimeByTokenId(v).call());
-            promisesRevoked.push(self.contracts.PeonyCertificate.methods.isCertificateRevokedByIssuer(v).call())
           });
           Promise.all(promisesURI).then(function(uris){
               // console.log(tokenURIs);
@@ -114,14 +111,6 @@ class MyCertificate extends Component {
            Promise.all(promisesExpTime).then(function(expTimes){
               self.state.tokensExpTime = expTimes;
            });
-
-           Promise.all(promisesRevoked).then(function(revoked){
-            self.state.tokensRevoked = revoked;
-            console.log(JSON.stringify(revoked))
-
-           });
-
-
         });
     }); 
     this.contracts.PeonyCertificate.methods.isAccountLocked().call().then(function(locked){

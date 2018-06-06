@@ -1,6 +1,7 @@
-var HDWalletProvider = require("truffle-hdwallet-provider");
-var passphrase = "<secret passphrase of the deployment wallet>";
-
+var HDWalletProvider = require("truffle-hdwallet-provider"); //Use for passphrases
+var HDWalletProviderPrivateKey = require("truffle-hdwallet-provider-privkey"); //use for private key
+var passphrase = "<passphrase>";
+var privateKey = "<private key>";
 module.exports = {
   migrations_directory: "./migrations",
   networks: {

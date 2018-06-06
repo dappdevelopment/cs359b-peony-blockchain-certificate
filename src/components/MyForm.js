@@ -152,7 +152,6 @@ class MyForm extends Component {
       signersNamesStr, 
       this.state.radioChecked
     );
-    this.cancelCourse()
     // this.contracts.PeonyCertificate.methods.IssueCertificate(
     //   this.state['address'], 
     //   JSON.stringify(this.state['jsonUrl']),
@@ -217,16 +216,10 @@ class MyForm extends Component {
     }
   }
 
-
-
-  cancelCourse = () => { 
-    this.myFormRef.reset();
-  }
-
   render() {
     return (
       
-      <form className="pure-form pure-form-stacked" ref={(el) => this.myFormRef = el}>
+      <form className="pure-form pure-form-stacked">
      {/* <form> */}
         <Layout style={{ padding: '24px 24px', width:'1300px'}}>
         <table>
