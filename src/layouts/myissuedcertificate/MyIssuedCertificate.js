@@ -14,11 +14,30 @@ class MyIssuedCertificate extends Component {
     super(props)
     this.contracts = context.drizzle.contracts;
     this.state = {
-      mode: 'default'
+      mode: 'default',
+      tokenSigners: [],
     }
   }
 
   onSelectTab = ({key}) => {
+    //Get each token's signers when the certificate is clicked
+    //var self = this;
+    var self = this;
+    var tokenId = this.state.tokenIds[key];
+    this.contracts.PeonyCertificate.methods.getNumberOfSigners(tokenId).call().then(function(numberOfSigners){
+        var promisesSigners = [];
+        for(var i = 0 ; i < numberOfSigners ; i++){
+          promisesSigners.push(
+            self.contracts.PeonyCertificate.methods.getSigner(tokenId, i).call()
+          );
+        }
+        Promise.all(promisesSigners).then(function(signers){
+          self.state.tokenSigners[tokenId] = signers;
+          self.setState({
+            mode: key
+          });
+        });
+    });
     this.setState({
       mode: key
     });
@@ -35,17 +54,16 @@ class MyIssuedCertificate extends Component {
       var tokenId = this.state.tokenIds[mode];
       var tokenURI = this.state.tokenURIs[mode];
       var tokenExpTime = this.state.tokensExpTime[mode];
-      var tokenSigners = [
-        {
-          name: "Hans Wang",
-          signature: "CW",
-          address: "0x0123",
-          dateSigned: Date.now()
-        }
-      ];
+      // var tokenSigners = [];
+      // if(this.state.tokenSigners[tokenId]){
+      //   console.log("Signers: "+ JSON.stringify(this.state.tokenSigners[tokenId]));
+      //   tokenSigners = this.state.tokenSigners[tokenId];
+      // }else{
+      //   tokenSigners=[];
+      // }
       return( 
               <div>
-              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={tokenSigners}/>
+              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={this.state.tokenSigners[tokenId]}/>
               </div>
             );
       } else {
@@ -77,18 +95,13 @@ class MyIssuedCertificate extends Component {
         }
         var promisesURI = [];
         var promisesExpTime = [];
-        var promisesSigners = [];
+
         Promise.all(promises).then(function(values) {
           // console.log(values);
           values.forEach(function(v) {
             // console.log(v+"called");
             promisesURI.push( self.contracts.PeonyCertificate.methods.tokenURI(v).call());
             promisesExpTime.push(self.contracts.PeonyCertificate.methods.GetExpirationTimeByTokenId(v).call());
-            self.contracts.PeonyCertificate.methods.getNumberOfSigners(v).call().then(function(numberOfSigners){
-              for(var i = 0 ; i < numberOfSigners ; i ++){
-                
-              }
-            });
           });
           Promise.all(promisesURI).then(function(uris){
               // console.log(tokenURIs);
@@ -117,8 +130,7 @@ class MyIssuedCertificate extends Component {
         <Content style={{ padding: '0 50px', minHeight: 280 }}>
           <div className="pure-u-1-1">
             <h2>Issued Certificates</h2>
-            <p>You have issued
-            <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificates.</p>
+            <p>You have issued <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificates</p>
             <div>
               <Button type="danger"
                 onClick={this.lockDownAccount}
