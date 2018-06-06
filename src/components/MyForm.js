@@ -11,6 +11,13 @@ const { TextArea } = Input;
 import { Radio } from 'antd';
 
 
+// import Form from './=../../node_modules/muicss/lib/react/form';
+// import Input from './../../node_modules/muicss/lib/react/input';
+// import Textarea from './../../node_modules/muicss/lib/react/textarea';
+// import Button from './../../node_modules/muicss/lib/react/button';
+
+
+
 
 /*
  * Create component.
@@ -212,25 +219,29 @@ class MyForm extends Component {
   render() {
     return (
       <form className="pure-form pure-form-stacked">
-    {/* <form> */}
+     {/* <form> */}
+     
         <table>
             <tr>
-                <td>Address: <input type='text' name='address' placeholder='To Address' onChange={this.handleInputChange} /></td>
-                <td>Recipient Name: <input type='text' name='recipientName' placeholder='Recipient Name' onChange={this.handleInputChange} /></td>
-                <td>Certificate Title: <input type='text' name='title' placeholder='Certificate Title' onChange={this.handleInputChange} /></td>
+                <td>Recipient Address: <Input type='text' name='address' placeholder='To Address' onChange={this.handleInputChange} /></td>
+                <td>Recipient Name: <Input type='text' name='recipientName' placeholder='Recipient Name' onChange={this.handleInputChange} /></td>
             </tr>
             <tr>
-                <td><TextArea type='text' name='body' placeholder='Body' onChange={this.handleInputChange}/></td>    
-                <td><input type='text' name='body' placeholder='Body' onChange={this.handleInputChange} /></td>
-                <td><input type='text' name='bckgrdImg' placeholder='Background Image Url' onChange={this.handleInputChange} /></td>
-                <td><input type='text' name='bdgImg' placeholder='Badge Image Url' onChange={this.handleInputChange} /></td>
+                <td>Certificate Title: <Input type='text' name='title' placeholder='Certificate Title' onChange={this.handleInputChange} /></td>
+                <td>Certificate Content: <TextArea type='text' name='body' placeholder='Body' onChange={this.handleInputChange}/></td>    
+            </tr>
+            <tr>
+                <td>background Image: <Input type='text' name='bckgrdImg' placeholder='Background Image Url' onChange={this.handleInputChange} /></td>
+                <td>badge Image:<Input type='text' name='bdgImg' placeholder='Badge Image Url' onChange={this.handleInputChange} /></td>
             </tr>
 
         </table>
+      
+        <div>Is this certicate revokable or not?</div>
         <Radio onClick={this.radioChecked} checked={this.state.radioChecked}>Revokable</Radio>
         <Toggle
             defaultChecked={ true }
-            label='Enabled and checked'
+            label='Enable expiration date or not'
             onAriaLabel='This toggle is checked. Press to uncheck.'
             offAriaLabel='This toggle is unchecked. Press to check.'
             onText='On'
@@ -264,6 +275,7 @@ class MyForm extends Component {
             <button type="button" onClick={this.handleAddSigner} className="small">Add Signer</button>
             <button>Incorporate</button>
         </form>
+        <div>Sign your name here: <Input type='text' name='signyourname' placeholder='Type in your name' onChange={this.handleInputChange} /></div>
 
 
 

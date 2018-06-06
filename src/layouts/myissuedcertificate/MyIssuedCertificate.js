@@ -33,6 +33,7 @@ class MyIssuedCertificate extends Component {
         }
         Promise.all(promisesSigners).then(function(signers){
           self.state.tokenSigners[tokenId] = signers;
+          console.log("HEY " + JSON.stringify(signers))
           self.setState({
             mode: key
           });
