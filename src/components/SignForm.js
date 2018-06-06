@@ -98,7 +98,8 @@ class SignForm extends Component {
 
   render() {
     return (
-      <form className="pure-form pure-form-stacked">
+      
+      <form className="pure-u-1-1 header">
     {/* <form> */}
         <table>
             <tr>
