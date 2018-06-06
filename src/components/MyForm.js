@@ -68,7 +68,7 @@ class MyForm extends Component {
 
     this.state = {
         mode: 'default',
-        isToggleOn: true,
+        isToggleOn: false,
         radioChecked: false,
         currentYear: (new Date()).getFullYear(),
         startDate: moment(),
