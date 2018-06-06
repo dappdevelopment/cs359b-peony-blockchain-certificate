@@ -47,39 +47,13 @@ class CertificatePreview extends Component {
     this.contracts.PeonyCertificate.methods.lockAccount().send({from: this.props.accounts[0]});
   }
 
-  renderContent = () => {
-    const { mode, tokenURIs } = this.state;
-    var d = new Date();
-    if (mode != 'default') {
-      var tokenId = this.state.tokenIds[mode];
-      var tokenURI = this.state.tokenURIs[mode];
-      var tokenExpTime = this.state.tokensExpTime[mode];
-      var tokenSigners = [
-        {
-          name: "Hans Wang",
-          signature: "CW",
-          address: "0x0123",
-          dateSigned: Date.now()
-        }
-      ];
-      return( 
-              <div>
-              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={tokenSigners}/>
-              </div>
-            );
-      } else {
-      return (<div>Click contarct id to view its name here...</div>);
-    }
-
-  }
-
   componentWillReceiveProps(nextProps) {
-    console.log("Received new props");
+    //console.log("Received new props");
     this.setState({ 
-      tokenId : this.props.tokenId,
-      tokenURI : this.props.tokenURI,
-      tokenExpTime : this.props.tokenExpTime,
-      tokenSigners : this.props.tokenSigners 
+      tokenId : nextProps.tokenId,
+      tokenURI : nextProps.tokenURI,
+      tokenExpTime : nextProps.tokenExpTime,
+      tokenSigners : nextProps.tokenSigners 
     });
   }
   
@@ -90,14 +64,17 @@ class CertificatePreview extends Component {
     var signerNames = [];
     var signerSignartures = [];
     var signerAddrs = [];
-    this.state.tokenSigners.forEach(function(c){
-      var date = new Date(c.dateSigned);
-      var dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-      signerNames.push(<td>{c.name}</td>);
-      signerSignartures.push(<td><i>{c.signature}</i>{' '+dateString}</td>);
-      signerAddrs.push(c.address);
-    });
-    console.log("Preview Id: "+ this.state.tokenId);
+    //console.log("Signer in preview: "+JSON.stringify(this.state.tokenSigners));
+    if(this.state.tokenSigners){
+      this.state.tokenSigners.forEach(function(c, index){
+        var date = new Date(c.dateSigned);
+        var dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+        signerNames.push(<td key={index+"_Signer_Name"}>{c.name}</td>);
+        signerSignartures.push(<td key={index+"_Signer_Signature"}><i>{c.signature}</i>{' '+dateString}</td>);
+        signerAddrs.push(c.address);
+      });
+    }
+    //console.log("Preview Id: "+ this.state.tokenId);
     return( 
       <div>
       <div>Token Id: {this.state.tokenId}</div>
