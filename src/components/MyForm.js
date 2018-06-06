@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 var web3 = require('web3');
-import { Input } from 'antd';
+import { Input, Layout } from 'antd';
 const { TextArea } = Input;
 import { Radio } from 'antd';
 
@@ -218,9 +218,10 @@ class MyForm extends Component {
 
   render() {
     return (
+      
       <form className="pure-form pure-form-stacked">
      {/* <form> */}
-     
+        <Layout style={{ padding: '24px 24px', width:'1300px'}}>
         <table>
             <tr>
                 <td>Recipient Address: <Input type='text' name='address' placeholder='To Address' onChange={this.handleInputChange} /></td>
@@ -228,6 +229,8 @@ class MyForm extends Component {
             </tr>
             <tr>
                 <td>Certificate Title: <Input type='text' name='title' placeholder='Certificate Title' onChange={this.handleInputChange} /></td>
+            </tr>
+            <tr>    
                 <td>Certificate Content: <TextArea type='text' name='body' placeholder='Body' onChange={this.handleInputChange}/></td>    
             </tr>
             <tr>
@@ -236,10 +239,11 @@ class MyForm extends Component {
             </tr>
 
         </table>
-      
-        <div>Is this certicate revokable or not?</div>
-        <Radio onClick={this.radioChecked} checked={this.state.radioChecked}>Revokable</Radio>
-        <Toggle
+        <br/>
+        <table>
+            <tr>
+                
+                <td><Toggle
             defaultChecked={ true }
             label='Enable expiration date or not'
             onAriaLabel='This toggle is checked. Press to uncheck.'
@@ -256,10 +260,15 @@ class MyForm extends Component {
               onChange={this.handleChange} />
             :
               <div/>
-        }
+        }</td>
+        <td><div>Is this certicate revokable or not?</div>
+        <Radio onClick={this.radioChecked} checked={this.state.radioChecked}>Revokable</Radio></td>
+            </tr>
+        </table>
+        <br/>
         <form onSubmit={this.handleSignerSubmit}>
             
-            <h4>Add Signer</h4>
+            <div>Add Signer</div>
 
             {this.state.signers.map((signer, idx) => (
             <div className="signer">
@@ -272,13 +281,15 @@ class MyForm extends Component {
                 </table>
             </div>
             ))}
+            
             <button type="button" onClick={this.handleAddSigner} className="small">Add Signer</button>
-            <button>Incorporate</button>
+            
+            {/* <button>Incorporate</button> */}
         </form>
-        <div>Sign your name here: <Input type='text' name='signyourname' placeholder='Type in your name' onChange={this.handleInputChange} /></div>
+        
 
 
-
+        <br/>
 
         {/* {this.inputs.map((input, index) => {            
             var inputType = this.translateType(input.type)
@@ -287,6 +298,7 @@ class MyForm extends Component {
             return (<input key={input.name} type={inputType} name={input.name} value={this.state[input.name]} placeholder={inputLabel} onChange={this.handleInputChange} />)
         })} */}
         <button key="submit" className="pure-button" type="button" onClick={this.handleSubmit}>Submit</button>
+        </Layout>
       </form>
     )
   }
