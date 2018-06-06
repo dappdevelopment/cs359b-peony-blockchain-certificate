@@ -14,11 +14,30 @@ class MyCertificate extends Component {
     super(props)
     this.contracts = context.drizzle.contracts;
     this.state = {
-      mode: 'default'
+      mode: 'default',
+      tokenSigners: [],
     }
   }
 
   onSelectTab = ({key}) => {
+     //Get each token's signers when the certificate is clicked
+    //var self = this;
+    var self = this;
+    var tokenId = this.state.tokenIds[key];
+    this.contracts.PeonyCertificate.methods.getNumberOfSigners(tokenId).call().then(function(numberOfSigners){
+        var promisesSigners = [];
+        for(var i = 0 ; i < numberOfSigners ; i++){
+          promisesSigners.push(
+            self.contracts.PeonyCertificate.methods.getSigner(tokenId, i).call()
+          );
+        }
+        Promise.all(promisesSigners).then(function(signers){
+          self.state.tokenSigners[tokenId] = signers;
+          self.setState({
+            mode: key
+          });
+        });
+    });
     this.setState({
       mode: key
     });
@@ -35,17 +54,9 @@ class MyCertificate extends Component {
       var tokenId = this.state.tokenIds[mode];
       var tokenURI = this.state.tokenURIs[mode];
       var tokenExpTime = this.state.tokensExpTime[mode];
-      var tokenSigners = [
-        {
-          name: "Hans Wang",
-          signature: "CW",
-          address: "0x0123",
-          dateSigned: Date.now()
-        }
-      ];
       return( 
               <div>
-              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={tokenSigners}/>
+              <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={this.state.tokenSigners[tokenId]}/>
               </div>
             );
       } else {
