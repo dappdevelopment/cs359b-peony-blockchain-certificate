@@ -26,7 +26,8 @@ class CertificatePreview extends Component {
         tokenId : this.props.tokenId,
         tokenURI : this.props.tokenURI,
         tokenExpTime : this.props.tokenExpTime,
-        tokenSigners : this.props.tokenSigners // this needs to be an array of JSON: 
+        tokenSigners : this.props.tokenSigners, // this needs to be an array of JSON: 
+        revoked: this.props.revoked
         /*
         {
         name: "name",
@@ -88,6 +89,8 @@ class CertificatePreview extends Component {
       <div>Issuer Address: <ContractData hideIndicator="true" contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenId}/></div>
       <div hidden={this.state.tokenExpTime == 0} >Expiration Time: {this.state.tokenExpTime}</div>
       <h3 hidden={this.state.tokenExpTime == 0 || Date.now() <= this.state.tokenExpTime} style={{color: 'red'}}>This Certificate Is Expired!!</h3>
+      <h3 hidden={this.state.revoked == 0} style={{color: 'red'}}>Revoked: {this.state.revoked}</h3>
+      <div>Revoked: {this.state.revoked}</div>
       <br/>
       <br/>
       <div id="Certificate Shot" style={{width:'800px',height:'566px',padding: "30px 30px 30px 30px",backgroundImage: `url(${CertBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
