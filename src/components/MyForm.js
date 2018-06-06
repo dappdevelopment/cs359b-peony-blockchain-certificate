@@ -244,7 +244,7 @@ class MyForm extends Component {
             <tr>
                 
                 <td><Toggle
-            defaultChecked={ true }
+            defaultChecked={ false }
             label='Enable expiration date or not'
             onAriaLabel='This toggle is checked. Press to uncheck.'
             offAriaLabel='This toggle is unchecked. Press to check.'
