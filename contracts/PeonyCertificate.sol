@@ -187,7 +187,10 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     function isCertificateRevokedByIssuer(uint256 tokenId) public view returns(bool revoked){
         return isCertificateRevoked[tokenId];
     }
-     
+     // Check if the certificate has been revoked or not
+    function isCertificateRevokable(uint256 tokenId) public view returns(bool revokable){
+        return revokableCertificates[tokenId];
+    }
     //Helper function to return if certificate is valid
     //Currently only verify if the certificate is revoke or not.
     function isCertificateValid(uint256 tokenId) public view returns(bool valid){
