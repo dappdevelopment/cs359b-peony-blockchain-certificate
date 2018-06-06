@@ -131,7 +131,7 @@ class MyIssuedCertificate extends Component {
         <Content style={{ padding: '0 50px', minHeight: 280 }}>
           <div className="pure-u-1-1">
             <h2>Issued Certificates</h2>
-            <p>You have issued <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificates</p>
+            <p>You have issued <ContractData hideIndicator="true" contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificates</p>
             <div>
               <Button type="danger"
                 onClick={this.lockDownAccount}

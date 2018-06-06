@@ -60,13 +60,15 @@ class Lookup extends Component {
       </Layout >
  */
     // <link href="css/style.css" rel="stylesheet"/>
+    <div>
     <div className="pure-u-1-1 header">
       <img src={logo} alt="peony-logo" width="200px"/>
       <h1>Peony</h1>
       <div>
-        <p>Total Active Certificate Powered By Peony: <ContractData contract="PeonyCertificate" method="totalSupply"/></p>
+        <p>Total Active Certificate Powered By Peony: <ContractData hideIndicator="true" contract="PeonyCertificate" method="totalSupply"/></p>
       </div>
       <br/><br/>
+    </div>
       <EditableCell accountsAddr={this.props.accounts[0]}/>
 
             

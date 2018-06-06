@@ -32,7 +32,8 @@ class EditableCell extends React.Component {
       tokenId : '',
       tokenURI : '',
       tokenExpTime : '',
-      tokenSigners : ''
+      tokenSigners : '',
+      tokenSigner: ''
     }
   }
   handleChange = (e) => {
@@ -75,9 +76,9 @@ class EditableCell extends React.Component {
           // <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={[this.state.value]}/>
           // </div>
           
-          <div>
-                <CertificatePreview tokenId={this.state.value} tokenURI={this.state.tokenURI} tokenExpTime={this.state.tokenExpTime} tokenSigners={tokenSigners}/>
-          </div>
+         <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div><CertificatePreview tokenId={this.state.value} tokenURI={this.state.tokenURI} tokenExpTime={this.state.tokenExpTime} tokenSigners={this.state.tokenSigner}/></div>
+         </div>
         );
       // } else {
         // return (
@@ -103,10 +104,14 @@ class EditableCell extends React.Component {
 
   setSign = () => {
     this.state.signornot = true;
+    this.state.submitted = true;
   }
 
   setNotSign = () => {
-    this.state.signornot = false;
+    //this.state.signornot = false;
+    this.setState({
+      signornot: false
+    });
   }
 
   setSubmitted = () => {
@@ -117,12 +122,11 @@ class EditableCell extends React.Component {
     console.log(this.state.signornot)
     if (this.state.isSigner && !this.state.submitted) {
       return (
-        <div>
-          <h4>Do you want to sign?</h4>
+        <div className="pure-u-1-1 header">
+          <h4>There is a pending signature request. Do you want to sign it now?</h4>
           <ButtonGroup>
-          <Button onClick={this.setSign}>Yes</Button>
-          <Button onClick={this.setNotSign}>No</Button>
-          <Button onClick={this.setSubmitted}>Submit</Button>
+          <Button onClick={this.setSign}>Sign</Button>
+          
           </ButtonGroup>
         </div>
       );
@@ -137,7 +141,9 @@ class EditableCell extends React.Component {
   signCertificate = () => {
     if (this.state.submitted && this.state.signornot) {
       return (
-        <SignForm contract="PeonyCertificate" method="signCertificate"  labels={['tokenId', 'signature', 'dateSigned']} tokenId={this.state.value} accountsAddr={this.state.accountsAddr}/>
+        
+        <SignForm hideIndicator="true" contract="PeonyCertificate" method="signCertificate"  labels={['tokenId', 'signature', 'dateSigned']} tokenId={this.state.value} accountsAddr={this.state.accountsAddr}/>
+      
       );
     } else {
       return (
@@ -181,6 +187,9 @@ class EditableCell extends React.Component {
       this.contracts.PeonyCertificate.methods.GetExpirationTimeByTokenId(value).call().then(function(v){
         self.state.tokentokenExpTimeURI = v
       });
+      
+
+
       this.contracts.PeonyCertificate.methods.getNumberOfSigners(value).call().then(function(numberSigner){
         var signer = [];
         self.state.numberOfSigner = numberSigner;
@@ -188,6 +197,7 @@ class EditableCell extends React.Component {
           signer.push( self.contracts.PeonyCertificate.methods.getSigner(value, i).call());
         }
         Promise.all(signer).then(function(values) {
+          self.state.tokenSigner = values;
           values.forEach(function(v) {
             signerName.push(v.name);
             signerAddr.push(v.signerAddress);
@@ -228,9 +238,9 @@ class EditableCell extends React.Component {
       <div className="editable-cell">
         
           
-            <div className="editable-cell-input-wrapper" >
+            <div className="pure-u-1-1 header" >
             <Search
-              placeholder="input search text"
+              placeholder="input certificate ID"
               onSearch={value => { this.resetState();this.setState({value}); this.startSearch(); }}
               enterButton
               
@@ -249,8 +259,8 @@ class EditableCell extends React.Component {
               /> */}
             </div>
             {/* : */}
-            <div className="editable-cell-text-wrapper">
-              {value || ' '}
+            <div>
+              {/* {value || ' '} */}
               {/* <Icon
                 type="edit"
                 className="editable-cell-icon"
@@ -263,6 +273,7 @@ class EditableCell extends React.Component {
             {
               this.signerDiv()
             }
+            
             {
               this.signCertificate()
             }

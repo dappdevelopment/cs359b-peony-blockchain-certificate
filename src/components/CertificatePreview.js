@@ -84,7 +84,7 @@ class CertificatePreview extends Component {
       <div>Certificate Content: {obj.body}</div>
       <div>Background Image Url: {obj.bckgrdImg}</div>
       <div>Badge Image Url: {obj.bdgImg}</div>
-      <div>Issuer Address: <ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenId}/></div>
+      <div>Issuer Address: <ContractData hideIndicator="true" contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenId}/></div>
       <div hidden={this.state.tokenExpTime == 0} >Expiration Time: {this.state.tokenExpTime}</div>
       <h3 hidden={this.state.tokenExpTime == 0 || Date.now() <= this.state.tokenExpTime} style={{color: 'red'}}>This Certificate Is Expired!!</h3>
       <br/>
@@ -98,8 +98,10 @@ class CertificatePreview extends Component {
                 <th style={{align: 'top'}} >
                   <div style={{align: 'top'}}>
                   <div>{obj.title}</div>
-                  <div>Receiptient: {obj.recipientName}  (Address: {obj.address})</div>
-                  <div>Issuer: Stanford (Address:<ContractData contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenId}/>)</div>
+                  <div>Dear {obj.recipientName},</div>
+                  {/* <div>Recipient Address: {obj.address}</div> */}
+                  <div>Certificate content: {obj.body}</div>
+                  <div>Issuer: Stanford (Address:<ContractData hideIndicator="true" contract="PeonyCertificate" method="GetIssuerAddressByTokenId" methodArgs={this.state.tokenId}/>)</div>
                   </div>
                 </th>
               </table>
