@@ -123,7 +123,7 @@ class MyCertificate extends Component {
           <div className="pure-u-1-1">
             <h2>My Peony</h2>
             <p>You have 
-            <strong></strong> <ContractData contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate. (for now showing contract id)</p>
+            <strong></strong> <ContractData hideIndicator="true" contract="PeonyCertificate" method="balanceOf"  methodArgs={[this.props.accounts[0]]} /> certificate. (for now showing contract id)</p>
             <div>
               <Button type="danger"
                 onClick={this.lockDownAccount}
