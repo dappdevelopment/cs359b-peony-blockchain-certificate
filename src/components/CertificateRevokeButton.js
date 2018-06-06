@@ -53,6 +53,7 @@ class CertificateRevokeButton extends Component {
         buttonEnable = false;
     } else{
         var revokableData = this.props.contracts["PeonyCertificate"]["isCertificateRevokable"][this.revokableKey].value;
+        console.log("TokenID: "+ this.state.tokenId + " is revokable: " + revokableData);
         if(!revokableData){
             buttonText = "This certificate is not revokable!"
             buttonEnable = false;
