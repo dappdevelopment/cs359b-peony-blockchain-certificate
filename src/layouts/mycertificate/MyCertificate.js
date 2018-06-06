@@ -80,7 +80,7 @@ class MyCertificate extends Component {
     // });
     // console.log(temp);
     // console.log("@");
-    console.log(self.props)
+    //console.log(self.props)
     this.contracts.PeonyCertificate.methods.balanceOf(self.props.accounts[0]).call().then(function(balance){
         var promises = [];
         for (var i = 0 ; i < balance ; i++) {
