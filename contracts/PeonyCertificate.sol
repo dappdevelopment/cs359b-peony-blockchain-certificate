@@ -51,8 +51,8 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         uint256 dateSigned;
     }
 
-    // Mapping tokenId to Signer Struct 
-    mapping (uint256 => mapping(address => Signer)) TokenSigners;
+    // Mapping tokenId to Signer index in TokenSignersList 
+    mapping (uint256 => mapping(address => uint256)) TokenSignersIndex;
 
     // Mapping to a list of signers
     mapping (uint256 => Signer[]) TokenSignersList;
@@ -99,9 +99,9 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
         strings.slice memory delim = ";".toSlice();
         // Add signers to the token list
         for(uint256 i = 0 ; i < signAddr.length ; i++){
-            TokenSigners[newTokenId][signAddr[i]] = Signer(sliceName.split(delim).toString(), signAddr[i], "", 0);
             //share the referneces so can share the same updates actions
-            TokenSignersList[newTokenId].push(TokenSigners[newTokenId][signAddr[i]]); 
+            TokenSignersList[newTokenId].push(Signer(sliceName.split(delim).toString(), signAddr[i], "", 0));
+            TokenSignersIndex[newTokenId][signAddr[i]] = i; 
         }
         //populate map for revokable list
         revokableCertificates[newTokenId] = revokable;
@@ -121,8 +121,11 @@ contract PeonyCertificate is ERC721Token ("Peony", "PNY") {
     //For signer to find a particular tokenId and sign the certificate
     function signCertificate(uint256 tokenId, string signature, uint dateSigned) onlyUnlocked public {
         //signatures[tokenId][msg.sender] = signature;
-        TokenSigners[tokenId][msg.sender].signature = signature;
-        TokenSigners[tokenId][msg.sender].dateSigned = dateSigned;
+        uint256 index = TokenSignersIndex[tokenId][msg.sender];
+        require(index < TokenSignersList[tokenId].length);
+        require(TokenSignersList[tokenId][index].signerAddr == msg.sender);
+        TokenSignersList[tokenId][index].signature = signature;
+        TokenSignersList[tokenId][index].dateSigned = dateSigned;
     }
 
     //Get total number of signer

@@ -67,7 +67,8 @@ class CertificatePreview extends Component {
     //console.log("Signer in preview: "+JSON.stringify(this.state.tokenSigners));
     if(this.state.tokenSigners){
       this.state.tokenSigners.forEach(function(c, index){
-        var date = new Date(c.dateSigned);
+        var date = new Date(parseInt(c.dateSigned));
+        console.log(date);
         var dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
         signerNames.push(<td key={index+"_Signer_Name"}>{c.name}</td>);
         signerSignartures.push(<td key={index+"_Signer_Signature"}><i>{c.signature}</i>{' '+dateString}</td>);

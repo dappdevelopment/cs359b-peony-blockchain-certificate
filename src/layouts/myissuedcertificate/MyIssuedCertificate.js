@@ -157,6 +157,10 @@ class MyIssuedCertificate extends Component {
         
         
         <Content style={{ padding: '50px 24px', minHeight: 280 }}>
+            <Button type="danger"
+                onClick={this.lockDownAccount}
+                disabled={this.state.isAccountLocked}
+              > Revoke This Certificate</Button>
             {this.renderContent()}
         </Content>
         {/* {<div className="pure-u-1-1">
