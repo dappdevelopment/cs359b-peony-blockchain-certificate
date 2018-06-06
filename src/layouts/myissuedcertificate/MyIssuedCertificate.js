@@ -7,7 +7,7 @@ import badget from '../../../public/img/MSFTBadge.png'
 import defaultBadget from '../../../public/img/Peony.jpg'
 import CertBackground from '../../../public/img/CertBackGround.jpg'
 import CertificatePreview from '../../components/CertificatePreview'
-
+import CertificateRevokeButton from '../../components/CertificateRevokeButton'
 
 class MyIssuedCertificate extends Component {
   constructor(props, context) {
@@ -64,6 +64,7 @@ class MyIssuedCertificate extends Component {
       // }
       return( 
               <div>
+              <CertificateRevokeButton tokenId={tokenId}/>
               <CertificatePreview tokenId={tokenId} tokenURI={tokenURI} tokenExpTime={tokenExpTime} tokenSigners={this.state.tokenSigners[tokenId]}/>
               </div>
             );
@@ -157,10 +158,6 @@ class MyIssuedCertificate extends Component {
         
         
         <Content style={{ padding: '50px 24px', minHeight: 280 }}>
-            <Button type="danger"
-                onClick={this.lockDownAccount}
-                disabled={this.state.isAccountLocked}
-              > Revoke This Certificate</Button>
             {this.renderContent()}
         </Content>
         {/* {<div className="pure-u-1-1">
