@@ -30,15 +30,18 @@ class CertificateRevokeButton extends Component {
 
   componentWillReceiveProps(nextProps) {
     //console.log("Received new props");
-    this.setState({ 
-        tokenId : nextProps.tokenId
-    });
-    this.isRevokedKey = this.contracts["PeonyCertificate"].methods["isCertificateRevokedByIssuer"].cacheCall(this.state.tokenId);
-    this.revokableKey = this.contracts["PeonyCertificate"].methods["isCertificateRevokable"].cacheCall(this.state.tokenId);
+    if(this.state.tokenId != nextProps.tokenId){
+        this.setState({ 
+            tokenId : nextProps.tokenId
+        });
+        this.isRevokedKey = this.contracts["PeonyCertificate"].methods["isCertificateRevokedByIssuer"].cacheCall(this.state.tokenId);
+        this.revokableKey = this.contracts["PeonyCertificate"].methods["isCertificateRevokable"].cacheCall(this.state.tokenId);    
+    }
   }
 
   render() {
     // Contract is not yet intialized.
+
     var buttonEnable =false;
     var buttonText = "Revoke This Certificate"
     if(!this.props.contracts["PeonyCertificate"].initialized) {
