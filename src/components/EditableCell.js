@@ -33,7 +33,8 @@ class EditableCell extends React.Component {
       tokenURI : '',
       tokenExpTime : '',
       tokenSigners : '',
-      tokenSigner: ''
+      tokenSigner: '',
+      tokenRevoked: ''
     }
   }
   handleChange = (e) => {
@@ -77,7 +78,7 @@ class EditableCell extends React.Component {
           // </div>
           
          <div style={{display: 'flex', justifyContent: 'center'}}>
-          <div><CertificatePreview tokenId={this.state.value} tokenURI={this.state.tokenURI} tokenExpTime={this.state.tokenExpTime} tokenSigners={this.state.tokenSigner}/></div>
+          <div><CertificatePreview tokenId={this.state.value} tokenURI={this.state.tokenURI} tokenExpTime={this.state.tokenExpTime} tokenSigners={this.state.tokenSigner} revoked={this.state.tokenRevoked}/></div>
          </div>
         );
       // } else {
@@ -187,7 +188,9 @@ class EditableCell extends React.Component {
       this.contracts.PeonyCertificate.methods.GetExpirationTimeByTokenId(value).call().then(function(v){
         self.state.tokentokenExpTimeURI = v
       });
-      
+      this.contracts.PeonyCertificate.methods.isCertificateRevokedByIssuer(value).call().then(function(v){
+        self.state.tokenRevoked = v;
+      });
 
 
       this.contracts.PeonyCertificate.methods.getNumberOfSigners(value).call().then(function(numberSigner){
@@ -196,6 +199,7 @@ class EditableCell extends React.Component {
         for (var i = 0 ; i < numberSigner ; i++) {
           signer.push( self.contracts.PeonyCertificate.methods.getSigner(value, i).call());
         }
+        
         Promise.all(signer).then(function(values) {
           self.state.tokenSigner = values;
           values.forEach(function(v) {
