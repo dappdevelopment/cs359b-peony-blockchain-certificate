@@ -1,15 +1,11 @@
-# CS359B Project Peony Blockchain Certificate  
-A multi-purposes certificate contract platform on ethereum 
+# Peony Blockchain Certificate  
+A certificate contract platform on ethereum 
 
 - Platform will be called as Peony
 - Token will be named "Petal"  with symbol of "PTL"
     - TA mentioned Non-fungible tokens, we can also treat the certificate as tokens depending on the contract
 
-
-
-![Imgur](https://i.imgur.com/j7O1GXx.jpg=100x)
-
-
+![Imgur](https://i.imgur.com/j7O1GXx.jpg =100x)
 
 ## Technologies used
 
