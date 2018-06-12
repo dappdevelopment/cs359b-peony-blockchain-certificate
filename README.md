@@ -80,15 +80,6 @@ Bob wants to hire potential employee Alice who just graduated from Stanford, and
     - More to come
 
 
-
-
-
-
-
-
-
-
-
 ## FAQ
 1. Why webpage only shows baby fox face :( ?
     **You will need to install Metamask plugin for your browser**
@@ -120,7 +111,8 @@ Bob wants to hire potential employee Alice who just graduated from Stanford, and
     **The verification costs you nothing! You save the money from performing background checks.**
 14. I am an employee. Do I need to pay for this?
     **The verification process costs you nothing too!**
-15. Feasibility analysis. Does this service make sense, e.g. storage and gas costs?   
+15. Feasibility analysis. Does this service make sense, e.g. storage and gas costs?
+    **The gas cost is relatively cheaper than the original method.**
     
 
 
@@ -211,6 +203,8 @@ Time unit for this project is based on nano-second(ns)
  1. ssh into the server ```ssh peony@dapps.nofaults.org```
  2. scp to the root directory: ```scp [file path] peony@dapps.nofaults.org:~/cs359b-peony-blockchain-certificate```
 
+
+<img src="https://i.imgur.com/j7O1GXx.jpg" width="100">
 
 ## Future work
 Peony will extend and become not only a educational certificate platform, but a general service platform that supports vehicle license plates, tickets, membership, and even ownship documents. And yes, we did get some inteinterests from investors, exciting journey indeed!
